@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{
+  dark: localStorage.getItem('theme') !== 'light',
+  scrolled: false,
+  mobileMenu: false,
+  progress: 0
+}" :class="{'dark':dark}" x-init="
+  $watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+  window.addEventListener('scroll', () => {
+    scrolled = window.scrollY > 20;
+    progress = Math.min(100, Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100));
+  }, { passive: true });
+" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Novu — SaaS Dashboard redesign case study by Piyush Chauhan. How a full UX overhaul reduced cognitive load by 40% and improved trial-to-paid conversion."/>
+  <meta name="author" content="Piyush Chauhan"/>
+  <meta property="og:title" content="Novu — SaaS Dashboard · Case Study by Piyush Chauhan"/>
+  <meta property="og:type" content="article"/>
+  <title>Novu — SaaS Dashboard · Case Study — Piyush Chauhan</title>`n  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23FF6B2B' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'><rect x='20' y='20' width='60' height='60' rx='12' transform='rotate(45 50 50)' /><path d='M42 38v24M42 38h12a8 8 0 0 1 0 16h-12' /></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Lenis for smooth scrolling -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { display: ['PT Sans','sans-serif'], body: ['DM Sans','sans-serif'] },
+          colors: { accent: '#FF6B2B', 'accent-light': '#FF8F5C' }
+        }
+      }
+    }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;}
+    html{font-family:'DM Sans',sans-serif;}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#FF6B2B;border-radius:99px;}
+    body{transition:background-color .3s,color .3s;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.25;}
+    .nav-link{position:relative;}
+    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
+    .nav-link:hover::after{width:100%;}
+    .btn-primary{position:relative;overflow:hidden;}
+    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}
+    .btn-primary:hover::after{left:160%;}
+    [x-cloak]{display:none!important;}
+    .photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}
+    .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+
+    /* Reading progress */
+    .progress-bar{position:fixed;top:0;left:0;height:3px;background:#FF6B2B;z-index:100;transition:width .1s linear;}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+
+    /* Case study prose */
+    .prose-cs h2{font-family:'PT Sans',sans-serif;font-size:1.55rem;font-weight:700;margin:2.75rem 0 1rem;line-height:1.25;}
+    .prose-cs h3{font-family:'PT Sans',sans-serif;font-size:1.15rem;font-weight:700;margin:2rem 0 .6rem;line-height:1.3;color:#FF6B2B;}
+    .prose-cs p{margin:0 0 1.4rem;line-height:1.82;color:#52525b;}
+    .dark .prose-cs p{color:#a1a1aa;}
+    .prose-cs ul{margin:0 0 1.4rem 1.5rem;list-style:disc;}
+    .prose-cs li{margin-bottom:.45rem;line-height:1.7;color:#52525b;}
+    .dark .prose-cs li{color:#a1a1aa;}
+    .prose-cs blockquote{border-left:3px solid #FF6B2B;padding:.75rem 1.25rem;margin:0 0 1.8rem;background:#fff7f4;border-radius:0 8px 8px 0;}
+    .dark .prose-cs blockquote{background:#27272a;}
+    .prose-cs blockquote p{color:#52525b;font-style:italic;margin:0;}
+    .dark .prose-cs blockquote p{color:#a1a1aa;}
+    .prose-cs hr{border:none;border-top:1px solid #e4e4e7;margin:2.5rem 0;}
+    .dark .prose-cs hr{border-top-color:#27272a;}
+    .prose-cs a{color:#FF6B2B;text-decoration:underline;text-underline-offset:3px;}
+
+    /* Stat card */
+    .stat-card{border-left:3px solid #FF6B2B;}
+
+    /* Image caption */
+    .img-caption{font-size:.8rem;color:#a1a1aa;text-align:center;margin-top:.6rem;}
+
+    /* Step badge */
+    .step-badge{width:2rem;height:2rem;min-width:2rem;border-radius:50%;background:#FF6B2B;color:#fff;font-family:'PT Sans',sans-serif;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;}
+
+    /* card hover */
+    .card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s;}
+    .card-h:hover{transform:translateY(-4px);}
+  @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } } @keyframes bg-wave-down { 0% { background-position: 0 -600px; } 100% { background-position: 0 0; } } </style>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased relative">
+  <!-- Scroll Sequence Background -->
+  <canvas id="scroll-seq-bg" class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"></canvas>
+  <!-- Premium ambient blurred background -->
+  <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 dark:bg-blue-400/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+  <!-- Minimalist Vertical Threads Wave Background -->
+  <div class="fixed inset-y-0 left-0 w-[50vw] pointer-events-none -z-20 overflow-hidden mix-blend-multiply dark:mix-blend-screen opacity-80 dark:opacity-50">
+    <div class="absolute inset-0 w-full h-full [animation:bg-wave-down_20s_linear_infinite]"
+      style="background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'600\' viewBox=\'0 0 100 600\' preserveAspectRatio=\'none\'><path d=\'M20,0 Q50,150 20,300 T20,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.2\' opacity=\'0.4\'/><path d=\'M30,0 Q80,150 30,300 T30,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.1\' opacity=\'0.5\'/><path d=\'M40,0 Q60,150 40,300 T40,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.15\' opacity=\'0.3\'/><path d=\'M50,0 Q90,150 50,300 T50,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.1\' opacity=\'0.6\'/></svg>') repeat-y; background-size: 100% 600px;">
+    </div>
+    <div class="absolute inset-0 w-full h-full [animation:bg-wave-down_28s_linear_infinite]"
+      style="background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'600\' viewBox=\'0 0 100 600\' preserveAspectRatio=\'none\'><path d=\'M60,0 Q30,150 60,300 T60,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.2\' opacity=\'0.4\'/><path d=\'M70,0 Q20,150 70,300 T70,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.1\' opacity=\'0.5\'/><path d=\'M80,0 Q50,150 80,300 T80,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.15\' opacity=\'0.3\'/><path d=\'M90,0 Q40,150 90,300 T90,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.1\' opacity=\'0.6\'/></svg>') repeat-y; background-size: 100% 600px;">
+    </div>
+  </div>
+
+  <!-- Reading progress bar -->
+  <div class="progress-bar" :style="`width:${progress}%`" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" aria-label="Reading progress"></div>
+
+  <!-- ═══ NAV ═══ -->
+  <header class="fixed top-0.5 left-0 right-0 z-50 transition-all duration-300"
+    :class="scrolled ? 'bg-white/60 dark:bg-zinc-950/60 backdrop-blur-2xl shadow-sm shadow-black/5' : 'bg-transparent'">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+      <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10">
+        <span class="text-zinc-900 dark:text-white">Piyush</span><span class="text-accent">.</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium" role="list">
+        <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+        <li><a href="projects.html" class="nav-link text-accent font-medium">Work</a></li>
+        <li><a href="index.html#about" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="blog.html" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Blog</a></li>
+        <li><a href="index.html#contact" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button @click="dark=!dark"
+          class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          :aria-label="dark ? 'Light mode' : 'Dark mode'">
+          <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </button>
+        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me →</a>
+        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
+          <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div x-show="mobileMenu" x-cloak
+      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium" role="list">
+        <li><a href="index.html#services" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Services</a></li>
+        <li><a href="projects.html" @click="mobileMenu=false" class="block text-accent font-medium">Work</a></li>
+        <li><a href="index.html#about" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">About</a></li>
+        <li><a href="blog.html" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Blog</a></li>
+        <li><a href="index.html#contact" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══ CASE STUDY HEADER ═══ -->
+    <article>
+      <header class="pt-32 pb-10 max-w-4xl mx-auto px-6">
+
+        <!-- Back link -->
+        <a href="projects.html" class="inline-flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors mb-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+          Back to projects
+        </a>
+
+        <!-- Tags + date -->
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">SaaS</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full">Figma</span>
+          <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full">Tailwind</span>
+          <span class="text-xs text-zinc-400 ml-1">2025 · 6 weeks</span>
+        </div>
+
+        <h1 class="reveal font-display font-bold text-4xl md:text-5xl lg:text-6xl text-zinc-900 dark:text-white leading-tight mb-6">
+          Novu — SaaS Dashboard Redesign
+        </h1>
+
+        <p class="reveal d1 text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed mb-10 max-w-2xl">
+          A complete UX and UI overhaul of a B2B notification management platform — reducing cognitive load, streamlining the core workflow, and converting more trial users into paying customers.
+        </p>
+
+        <!-- Meta row -->
+        <div class="reveal d2 grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-t border-b border-zinc-100 dark:border-zinc-900">
+          <div>
+            <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">Client</p>
+            <p class="font-medium text-zinc-900 dark:text-white text-sm">Novu Inc.</p>
+          </div>
+          <div>
+            <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">Role</p>
+            <p class="font-medium text-zinc-900 dark:text-white text-sm">Lead UI/UX Designer</p>
+          </div>
+          <div>
+            <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">Timeline</p>
+            <p class="font-medium text-zinc-900 dark:text-white text-sm">Jan – Feb 2025</p>
+          </div>
+          <div>
+            <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">Deliverables</p>
+            <p class="font-medium text-zinc-900 dark:text-white text-sm">Figma, HTML/CSS</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- ═══ HERO IMAGE ═══ -->
+      <div class="max-w-6xl mx-auto px-6 mb-16">
+        <div class="reveal photo-frame w-full h-72 md:h-[480px] rounded-3xl">
+          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1400&q=80" alt="Novu — SaaS Dashboard redesign hero" loading="eager"/>
+        </div>
+      </div>
+
+      <!-- ═══ RESULTS BANNER ═══ -->
+      <div class="max-w-4xl mx-auto px-6 mb-16">
+        <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">−40%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Cognitive load (SUS score)</p>
+          </div>
+          <div class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-accent">+27%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Trial-to-paid conversion</p>
+          </div>
+          <div class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">−35%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Support tickets (onboarding)</p>
+          </div>
+          <div class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">4.8/5</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Post-launch NPS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ARTICLE BODY ═══ -->
+      <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
+
+        <h2>The brief</h2>
+        <p>Novu is a B2B notification infrastructure platform — it lets developers route, manage, and monitor notifications across email, SMS, push, and in-app channels. The product was technically solid, but the dashboard had grown organically over two years without a coherent design strategy. By early 2025, the team were seeing high churn in the 14-day trial window and receiving consistent feedback that the platform was "powerful but overwhelming."</p>
+        <p>My mandate was simple: fix the first-hour experience without rebuilding the product from scratch. The budget was fixed and the engineering team had six weeks to ship.</p>
+
+        <blockquote>
+          <p>"We're losing users in the first 20 minutes. They sign up, see the dashboard, and just bounce. The product does exactly what they need — they just can't find it."</p>
+        </blockquote>
+
+        <h2>Discovery & research</h2>
+        <h3>User interviews</h3>
+        <p>I ran 9 user interviews with a mix of current paying customers and recently churned trial users. The sessions were 45-minute moderated usability tests combined with post-task interviews. Key findings:</p>
+        <ul>
+          <li>7 of 9 users couldn't locate the "Workflows" section without help during their first session</li>
+          <li>The notification log and the analytics panel were confused for one another by 5 users</li>
+          <li>The sidebar had 14 top-level navigation items — users reported feeling "unsure where to start"</li>
+          <li>Trial users specifically wanted a "get your first notification live" path, not a feature overview</li>
+        </ul>
+
+        <h3>Heuristic audit</h3>
+        <p>I ran a full Nielsen heuristic evaluation of the existing interface and identified 23 violations across 6 categories. The most critical were around visibility of system status, recognition over recall, and error prevention in the workflow builder.</p>
+
+      </div>
+
+      <!-- Full-width image -->
+      <div class="max-w-5xl mx-auto px-6 mb-4">
+        <div class="reveal photo-frame w-full h-56 md:h-80 rounded-2xl">
+          <img src="https://images.unsplash.com/photo-1581472723648-909f4851d4ae?w=1200&q=80" alt="Existing dashboard audit — heuristic violations mapped" loading="lazy"/>
+        </div>
+        <p class="img-caption">Existing dashboard with heuristic violations annotated during the audit phase.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
+
+        <h2>Design strategy</h2>
+        <p>Based on the research, I built the redesign around three principles:</p>
+
+      </div>
+
+      <!-- 3-column principles -->
+      <div class="max-w-5xl mx-auto px-6 mb-12">
+        <div class="reveal grid md:grid-cols-3 gap-5">
+          <div class="bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-7 border border-white/40 dark:border-zinc-700/50 shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            <div class="w-10 h-10 bg-orange-50 dark:bg-zinc-800 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-zinc-900 dark:text-white mb-2" style="font-size:1rem;margin:0 0 .5rem;color:inherit;">Progressive disclosure</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" style="margin:0;color:inherit;">Show only what's needed for the current task. Advanced features revealed on demand, not upfront.</p>
+          </div>
+          <div class="bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-7 border border-white/40 dark:border-zinc-700/50 shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            <div class="w-10 h-10 bg-orange-50 dark:bg-zinc-800 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-zinc-900 dark:text-white mb-2" style="font-size:1rem;margin:0 0 .5rem;color:inherit;">Opinionated navigation</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" style="margin:0;color:inherit;">Reduce the sidebar to 6 core items. Group secondary actions in context panels rather than global nav.</p>
+          </div>
+          <div class="bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-7 border border-white/40 dark:border-zinc-700/50 shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            <div class="w-10 h-10 bg-orange-50 dark:bg-zinc-800 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-zinc-900 dark:text-white mb-2" style="font-size:1rem;margin:0 0 .5rem;color:inherit;">Goal-first onboarding</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" style="margin:0;color:inherit;">Replace the feature tour with a 3-step "send your first notification" flow that delivers an aha-moment in under 5 minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
+
+        <h2>Process</h2>
+        <h3>Week 1–2 · Information architecture</h3>
+        <p>I ran a card sorting exercise with 12 participants to rebuild the navigation taxonomy from scratch. The 14-item sidebar collapsed to 6 primary destinations. I then produced low-fidelity wireframes in Figma for the 8 most-visited screens, running rapid async reviews with the product team using Loom walkthroughs.</p>
+
+      </div>
+
+      <!-- Process steps -->
+      <div class="max-w-4xl mx-auto px-6 mb-12">
+        <div class="reveal space-y-4">
+          <!-- Step -->
+          <div class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">1</div>
+            <div>
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Card sorting + IA rebuild</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Remote card sort with 12 participants via Optimal Workshop. 14 nav items → 6 clear destinations with zero ambiguous groupings.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">2</div>
+            <div>
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Lo-fi wireframes & async review</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">8 key screens sketched in Figma wireframe mode. Async review via Loom with the product team — 3 iteration rounds over 4 days.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">3</div>
+            <div>
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Hi-fi design & component library</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Full Figma component library built on Auto Layout. 40+ components covering all states (empty, loading, error). Dark mode tokens included.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">4</div>
+            <div>
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Usability testing & iteration</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">5 moderated sessions on the hi-fi prototype. 2 significant UX issues surfaced and resolved before handoff. SUS score improved from 54 → 82.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">5</div>
+            <div>
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Handoff & front-end support</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Zeroheight design doc + Tailwind CSS implementation of the new design tokens. Present during sprint to support the engineering team on edge cases.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second full-width image -->
+      <div class="max-w-5xl mx-auto px-6 mb-4">
+        <div class="reveal photo-frame w-full h-56 md:h-80 rounded-2xl">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt="High-fidelity Figma screens — new dashboard layout" loading="lazy"/>
+        </div>
+        <p class="img-caption">Final hi-fi screens showing the redesigned sidebar, dashboard home, and notification workflow builder.</p>
+      </div>
+
+      <!-- Before / After split -->
+      <div class="max-w-5xl mx-auto px-6 mb-12">
+        <div class="reveal grid md:grid-cols-2 gap-4">
+          <div>
+            <div class="photo-frame w-full h-52 rounded-2xl">
+              <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=700&q=80" alt="Before — original dashboard" loading="lazy"/>
+            </div>
+            <p class="img-caption mt-2">Before — 14-item sidebar, no clear entry point</p>
+          </div>
+          <div>
+            <div class="photo-frame w-full h-52 rounded-2xl">
+              <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=700&q=80" alt="After — redesigned dashboard" loading="lazy"/>
+            </div>
+            <p class="img-caption mt-2">After — 6-item sidebar, goal-first onboarding checklist</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-3xl mx-auto px-6 pb-16 prose-cs">
+
+        <h2>Key design decisions</h2>
+        <h3>Collapsing the sidebar</h3>
+        <p>The original sidebar mixed primary destinations with contextual actions and account settings indiscriminately. I applied a strict three-tier hierarchy: primary navigation (6 items, always visible), contextual actions (appear in a right panel when relevant), and account/settings (collapsed under an avatar menu). This alone reduced the cognitive entry cost significantly — users knew where they were and where they could go.</p>
+
+        <h3>The onboarding checklist</h3>
+        <p>Rather than a product tour, I designed a persistent but dismissible checklist embedded in the dashboard home. Three steps: connect a channel, create a workflow, send a test notification. Each step launches an inline mini-wizard that completes within the dashboard without breaking context. In the first month post-launch, 68% of trial users completed all three steps vs 21% previously.</p>
+
+        <h3>Empty states as teachers</h3>
+        <p>Every empty state in the old design was a blank panel. In the redesign, each empty state includes a one-sentence explanation of what the section does, a primary CTA, and a secondary link to documentation. This reduced support tickets specifically about feature discovery by 35%.</p>
+
+        <h2>Results</h2>
+        <p>The redesign shipped in week 6, exactly on schedule. Metrics were tracked over the following 6 weeks post-launch compared to the same prior period.</p>
+        <ul>
+          <li><strong>SUS (System Usability Scale) score:</strong> 54 → 82 (+28 points)</li>
+          <li><strong>Trial-to-paid conversion rate:</strong> +27%</li>
+          <li><strong>Onboarding completion (3-step flow):</strong> 21% → 68%</li>
+          <li><strong>Support tickets (onboarding-related):</strong> −35%</li>
+          <li><strong>Average time to first workflow created:</strong> 18 min → 4 min</li>
+          <li><strong>Post-launch NPS:</strong> 4.8/5</li>
+        </ul>
+
+        <blockquote>
+          <p>"Piyush Chauhan completely changed how we think about our onboarding. The checklist alone added 6 figures to our ARR in the first quarter. Exceptionally thorough process and a pleasure to work with."</p>
+        </blockquote>
+
+        <h2>Reflections</h2>
+        <p>The biggest lesson from this project: most SaaS UX problems aren't about aesthetics, they're about information architecture. The product was capable — users just couldn't find the value fast enough. A focused IA overhaul delivered more measurable ROI than a visual rebrand ever could have.</p>
+        <p>If I were to do it again, I'd push harder for a longer discovery phase. Six weeks is tight for a full dashboard redesign, and we had to make some navigation decisions based on incomplete card-sort data. The results held up, but another round of testing before hi-fi would have given me more confidence on a few borderline calls.</p>
+
+        <hr/>
+        <p><em>Interested in a similar engagement? <a href="index.html#contact">Get in touch</a> — I'm available for new projects from Q2 2025.</em></p>
+
+      </div>
+    </article>
+
+    <!-- ═══ MORE PROJECTS ═══ -->
+    <section class="bg-zinc-50 dark:bg-zinc-900/50 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white">More projects</h2>
+          <a href="projects.html" class="text-sm font-medium text-accent nav-link hidden md:block">View all →</a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <article class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+            <div class="photo-frame w-full h-44">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80" alt="Finlo — Fintech App" loading="lazy"/>
+            </div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2">
+                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Landing page</span>
+              </div>
+              <a href="#">
+                <h3 class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Finlo — Fintech App</h3>
+              </a>
+              <a href="#" class="text-sm font-medium text-accent nav-link">View project →</a>
+            </div>
+          </article>
+
+          <article class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+            <div class="photo-frame w-full h-44">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&q=80" alt="Orea — Creative Agency" loading="lazy"/>
+            </div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full">Agency</span>
+              </div>
+              <a href="#">
+                <h3 class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Orea — Creative Agency</h3>
+              </a>
+              <a href="#" class="text-sm font-medium text-accent nav-link">View project →</a>
+            </div>
+          </article>
+
+          <article class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+            <div class="photo-frame w-full h-44">
+              <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=700&q=80" alt="Bloom — E-commerce" loading="lazy"/>
+            </div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full">E-commerce</span>
+              </div>
+              <a href="#">
+                <h3 class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Bloom — E-commerce</h3>
+              </a>
+              <a href="#" class="text-sm font-medium text-accent nav-link">View project →</a>
+            </div>
+          </article>
+
+        </div>
+        <div class="text-center mt-8 md:hidden">
+          <a href="projects.html" class="text-sm font-medium text-accent">View all projects →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="py-16 md:py-20 lg:py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="bg-zinc-900/70 dark:bg-zinc-800/70 backdrop-blur-2xl border border-zinc-700/50 shadow-2xl rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+          <div class="relative z-10">
+            <p class="text-xs font-medium text-accent tracking-widest uppercase mb-4">Ready to start?</p>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-white mb-4">Got a similar project?</h2>
+            <p class="text-zinc-400 max-w-md mx-auto mb-8">I'm available for new projects. Tell me about what you're building and let's see if we're a good fit.</p>
+            <a href="index.html#contact" class="inline-flex items-center gap-2 btn-primary bg-accent text-white font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors">
+              Start a project →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900 pt-16 pb-8 md:pt-24 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
+        
+        <!-- Brand/Bio -->
+        <div class="md:col-span-2">
+          <a href="index.html#hero" class="inline-flex items-center gap-2.5 font-display font-bold text-xl tracking-tight mb-6 group">
+            <svg viewBox="0 0 100 100" class="w-7 h-7 text-accent group-hover:rotate-90 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="20" y="20" width="60" height="60" rx="12" transform="rotate(45 50 50)" />
+              <path d="M42 38v24M42 38h12a8 8 0 0 1 0 16h-12" />
+            </svg>
+            <span><span class="text-zinc-900 dark:text-white">Piyush</span><span class="text-accent">.</span></span>
+          </a>
+          <p class="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed max-w-sm mb-8">
+            UI/UX Designer and Frontend Developer based in India. Turning complex problems into elegant, functional, and visually stunning digital experiences.
+          </p>
+          <!-- Socials -->
+          <div class="flex items-center gap-3">
+            <a href="https://github.com/piyushch08" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/piyush-chauhan-353822385" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/piyu5h.08?igsh=MXJvcnlnb2hwZHliMQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div>
+          <h4 class="font-display font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-wider text-xs">Explore</h4>
+          <ul class="flex flex-col gap-3.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <li><a href="index.html#hero" class="hover:text-accent transition-colors">Home</a></li>
+            <li><a href="index.html#services" class="hover:text-accent transition-colors">Services</a></li>
+            <li><a href="projects.html" class="hover:text-accent transition-colors">Work</a></li>
+            <li><a href="index.html#about" class="hover:text-accent transition-colors">About</a></li>
+            <li><a href="blog.html" class="hover:text-accent transition-colors">Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact info -->
+        <div>
+          <h4 class="font-display font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-wider text-xs">Say Hello</h4>
+          <ul class="flex flex-col gap-3.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <li><a href="mailto:piyush.ch407@gmail.com" class="hover:text-accent transition-colors break-all">piyush.ch407@gmail.com</a></li>
+            <li class="mt-2">
+              <a href="index.html#contact" class="inline-flex items-center gap-1.5 text-accent font-medium hover:text-accent-light transition-colors group">
+                Let's talk 
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-zinc-200 dark:border-zinc-800/60 flex flex-col items-center justify-center gap-2 text-center">
+        <p class="text-xs text-zinc-500 dark:text-zinc-400">© <span id="yr"></span> Piyush Chauhan. All rights reserved.</p>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 flex items-center justify-center gap-1.5">
+          Built with <svg class="w-3.5 h-3.5 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> and Passion
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lenis smooth scroll
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+
+      lenis.on('scroll', (e) => {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        let scrollFraction = maxScroll > 0 ? e.scroll / maxScroll : 0;
+        if (scrollFraction < 0) scrollFraction = 0;
+        if (scrollFraction > 1) scrollFraction = 1;
+        
+        const frameIndex = Math.min(89, Math.floor(scrollFraction * 90));
+        if (window.drawScrollFrame) window.drawScrollFrame(frameIndex);
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Allow Lenis to handle anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          lenis.scrollTo(this.getAttribute('href'));
+        });
+      });
+    });
+
+    // --- Scroll Sequence Animation ---
+    (function initScrollSequence() {
+      const canvas = document.getElementById('scroll-seq-bg');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const frameCount = 90;
+      const images = [];
+      let imagesLoaded = 0;
+
+      for (let i = 1; i <= frameCount; i++) {
+        const img = new Image();
+        const frameNum = i.toString().padStart(3, '0');
+        img.src = `assets/images/bg-scroll/ezgif-frame-${frameNum}.jpg`;
+        img.onload = () => {
+          imagesLoaded++;
+          if (imagesLoaded === 1) {
+            window.drawScrollFrame(0);
+          }
+        };
+        images.push(img);
+      }
+
+      window.drawScrollFrame = function(index) {
+        if (!images[index] || !images[index].complete) return;
+        
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        
+        ctx.scale(dpr, dpr);
+        
+        const img = images[index];
+        const canvasRatio = window.innerWidth / window.innerHeight;
+        
+        // Crop the right 20% of the image to keep the focus on the left while zooming out more
+        const cropWidth = img.width * 0.80;
+        const cropHeight = img.height;
+        const imgRatio = cropWidth / cropHeight;
+        
+        let drawWidth = window.innerWidth;
+        let drawHeight = window.innerHeight;
+        let offsetX = 0;
+        let offsetY = 0;
+        
+        if (canvasRatio > imgRatio) {
+          drawHeight = window.innerWidth / imgRatio;
+          offsetY = (window.innerHeight - drawHeight) * 0.1; 
+        } else {
+          drawWidth = window.innerHeight * imgRatio;
+          offsetX = 0; 
+        }
+        
+        ctx.drawImage(img, 0, 0, cropWidth, cropHeight, offsetX, offsetY, drawWidth, drawHeight);
+      };
+
+      window.addEventListener('resize', () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        let scrollFraction = maxScroll > 0 ? scrollTop / maxScroll : 0;
+        if (scrollFraction > 1) scrollFraction = 1;
+        if (scrollFraction < 0) scrollFraction = 0;
+        if (window.drawScrollFrame) {
+          window.drawScrollFrame(Math.min(89, Math.floor(scrollFraction * 90)));
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
