@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="view-transition" content="same-origin" />
   <meta name="description" content="Piyush Chauhan's blog — thoughts on UI/UX design, frontend development and freelancing."/>
   <meta name="author" content="Piyush Chauhan"/>
   <meta property="og:title" content="Blog — Piyush Chauhan"/>
   <meta property="og:type" content="website"/>
-  <title>Blog — Piyush Chauhan</title>`n  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23FF6B2B' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'><rect x='20' y='20' width='60' height='60' rx='12' transform='rotate(45 50 50)' /><path d='M42 38v24M42 38h12a8 8 0 0 1 0 16h-12' /></svg>">
+  <title>Blog — Piyush Chauhan</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23FF6B2B' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'><rect x='20' y='20' width='60' height='60' rx='12' transform='rotate(45 50 50)' /><path d='M42 38v24M42 38h12a8 8 0 0 1 0 16h-12' /></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <!-- Lenis for smooth scrolling -->
@@ -22,7 +24,7 @@
     *,*::before,*::after{box-sizing:border-box;}
     html{font-family:'DM Sans',sans-serif;}
     h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .reveal{opacity:0;transform:translateY(30px) scale(0.98);transition:opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);}
     .reveal.visible{opacity:1;transform:translateY(0);}
     .reveal-delay-1{transition-delay:.08s;}.reveal-delay-2{transition-delay:.16s;}.reveal-delay-3{transition-delay:.24s;}.reveal-delay-4{transition-delay:.32s;}.reveal-delay-5{transition-delay:.4s;}.reveal-delay-6{transition-delay:.48s;}
     .nav-link{position:relative;}
@@ -39,7 +41,13 @@
     [x-cloak]{display:none!important;}
     .photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}
     .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-  @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } } @keyframes bg-wave-down { 0% { background-position: 0 -600px; } 100% { background-position: 0 0; } } </style>
+  @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } } 
+  @keyframes bg-wave-down { 0% { background-position: 0 -1200px; } 100% { background-position: 0 0; } } 
+  @keyframes bg-wave-up { 0% { background-position: 0 1200px; } 100% { background-position: 0 0; } }
+  
+  @keyframes scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+  @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+</style>
 </head>
 <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased relative">
   <!-- Scroll Sequence Background -->
@@ -49,12 +57,93 @@
   <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 dark:bg-blue-400/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
   <!-- Minimalist Vertical Threads Wave Background -->
-  <div class="fixed inset-y-0 left-0 w-[50vw] pointer-events-none -z-20 overflow-hidden mix-blend-multiply dark:mix-blend-screen opacity-80 dark:opacity-50">
-    <div class="absolute inset-0 w-full h-full [animation:bg-wave-down_20s_linear_infinite]"
-      style="background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'600\' viewBox=\'0 0 100 600\' preserveAspectRatio=\'none\'><path d=\'M20,0 Q50,150 20,300 T20,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.2\' opacity=\'0.4\'/><path d=\'M30,0 Q80,150 30,300 T30,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.1\' opacity=\'0.5\'/><path d=\'M40,0 Q60,150 40,300 T40,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.15\' opacity=\'0.3\'/><path d=\'M50,0 Q90,150 50,300 T50,600\' fill=\'none\' stroke=\'%23FF6B2B\' stroke-width=\'0.1\' opacity=\'0.6\'/></svg>') repeat-y; background-size: 100% 600px;">
+  <div style="view-transition-name: wave-container; transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0); transition: transform 0.1s ease-out;" class="fixed inset-y-0 left-0 w-[50vw] pointer-events-none -z-20 overflow-hidden mix-blend-multiply dark:mix-blend-screen opacity-100 dark:opacity-90 wave-parallax">
+    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-up_18s_linear_infinite]">
+      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g1_blog" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f97316"/>
+            <stop offset="100%" stop-color="#ec4899"/>
+          </linearGradient>
+        </defs>
+        <g id="wg1_blog" fill="none" stroke="url(#g1_blog)" vector-effect="non-scaling-stroke" opacity="1.0">
+          <path stroke-width="0.15">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M10,0 Q40,300 10,600 T10,1200; M10,0 Q70,300 25,600 T10,1200; M10,0 Q10,300 -5,600 T10,1200; M10,0 Q40,300 10,600 T10,1200" />
+      </path>
+      <path stroke-width="0.3">
+        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M15,0 Q60,300 15,600 T15,1200; M15,0 Q90,300 30,600 T15,1200; M15,0 Q30,300 0,600 T15,1200; M15,0 Q60,300 15,600 T15,1200" />
+      </path>
+      <path stroke-width="0.2">
+        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M20,0 Q50,300 20,600 T20,1200; M20,0 Q80,300 35,600 T20,1200; M20,0 Q20,300 5,600 T20,1200; M20,0 Q50,300 20,600 T20,1200" />
+      </path>
+      <path stroke-width="0.4">
+        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M25,0 Q80,300 25,600 T25,1200; M25,0 Q110,300 40,600 T25,1200; M25,0 Q50,300 10,600 T25,1200; M25,0 Q80,300 25,600 T25,1200" />
+      </path>
+      <path stroke-width="0.1">
+        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M30,0 Q90,300 30,600 T30,1200; M30,0 Q120,300 45,600 T30,1200; M30,0 Q60,300 15,600 T30,1200; M30,0 Q90,300 30,600 T30,1200" />
+      </path>
+      <path stroke-width="0.25">
+        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M35,0 Q70,300 35,600 T35,1200; M35,0 Q100,300 50,600 T35,1200; M35,0 Q40,300 20,600 T35,1200; M35,0 Q70,300 35,600 T35,1200" />
+      </path>
+      <path stroke-width="0.15">
+        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M40,0 Q60,300 40,600 T40,1200; M40,0 Q90,300 55,600 T40,1200; M40,0 Q30,300 25,600 T40,1200; M40,0 Q60,300 40,600 T40,1200" />
+      </path>
+      <path stroke-width="0.35">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M45,0 Q95,300 45,600 T45,1200; M45,0 Q125,300 60,600 T45,1200; M45,0 Q65,300 30,600 T45,1200; M45,0 Q95,300 45,600 T45,1200" />
+      </path>
+      <path stroke-width="0.1">
+        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M50,0 Q85,300 50,600 T50,1200; M50,0 Q115,300 65,600 T50,1200; M50,0 Q55,300 35,600 T50,1200; M50,0 Q85,300 50,600 T50,1200" />
+      </path>
+      <path stroke-width="0.2">
+        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q75,300 55,600 T55,1200; M55,0 Q105,300 70,600 T55,1200; M55,0 Q45,300 40,600 T55,1200; M55,0 Q75,300 55,600 T55,1200" />
+      </path>
+        </g>
+      </svg>
+      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg1_blog" /></svg>
     </div>
-    <div class="absolute inset-0 w-full h-full [animation:bg-wave-down_28s_linear_infinite]"
-      style="background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'600\' viewBox=\'0 0 100 600\' preserveAspectRatio=\'none\'><path d=\'M60,0 Q30,150 60,300 T60,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.2\' opacity=\'0.4\'/><path d=\'M70,0 Q20,150 70,300 T70,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.1\' opacity=\'0.5\'/><path d=\'M80,0 Q50,150 80,300 T80,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.15\' opacity=\'0.3\'/><path d=\'M90,0 Q40,150 90,300 T90,600\' fill=\'none\' stroke=\'%233B82F6\' stroke-width=\'0.1\' opacity=\'0.6\'/></svg>') repeat-y; background-size: 100% 600px;">
+    
+    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-up_24s_linear_infinite]">
+      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g2_blog" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2563eb"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <g id="wg2_blog" fill="none" stroke="url(#g2_blog)" vector-effect="non-scaling-stroke" opacity="1.0">
+          <path stroke-width="0.15">
+        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M45,0 Q15,300 45,600 T45,1200; M45,0 Q45,300 60,600 T45,1200; M45,0 Q-15,300 30,600 T45,1200; M45,0 Q15,300 45,600 T45,1200" />
+      </path>
+      <path stroke-width="0.3">
+        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M50,0 Q5,300 50,600 T50,1200; M50,0 Q35,300 65,600 T50,1200; M50,0 Q-25,300 35,600 T50,1200; M50,0 Q5,300 50,600 T50,1200" />
+      </path>
+      <path stroke-width="0.2">
+        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q25,300 55,600 T55,1200; M55,0 Q55,300 70,600 T55,1200; M55,0 Q-5,300 40,600 T55,1200; M55,0 Q25,300 55,600 T55,1200" />
+      </path>
+      <path stroke-width="0.4">
+        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M60,0 Q10,300 60,600 T60,1200; M60,0 Q40,300 75,600 T60,1200; M60,0 Q-20,300 45,600 T60,1200; M60,0 Q10,300 60,600 T60,1200" />
+      </path>
+      <path stroke-width="0.1">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M65,0 Q20,300 65,600 T65,1200; M65,0 Q50,300 80,600 T65,1200; M65,0 Q-10,300 50,600 T65,1200; M65,0 Q20,300 65,600 T65,1200" />
+      </path>
+      <path stroke-width="0.25">
+        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M70,0 Q15,300 70,600 T70,1200; M70,0 Q45,300 85,600 T70,1200; M70,0 Q-15,300 55,600 T70,1200; M70,0 Q15,300 70,600 T70,1200" />
+      </path>
+      <path stroke-width="0.15">
+        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M75,0 Q45,300 75,600 T75,1200; M75,0 Q75,300 90,600 T75,1200; M75,0 Q15,300 60,600 T75,1200; M75,0 Q45,300 75,600 T75,1200" />
+      </path>
+      <path stroke-width="0.35">
+        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M80,0 Q0,300 80,600 T80,1200; M80,0 Q30,300 95,600 T80,1200; M80,0 Q-30,300 65,600 T80,1200; M80,0 Q0,300 80,600 T80,1200" />
+      </path>
+      <path stroke-width="0.1">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M85,0 Q35,300 85,600 T85,1200; M85,0 Q65,300 100,600 T85,1200; M85,0 Q5,300 70,600 T85,1200; M85,0 Q35,300 85,600 T85,1200" />
+      </path>
+      <path stroke-width="0.2">
+        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M90,0 Q20,300 90,600 T90,1200; M90,0 Q50,300 105,600 T90,1200; M90,0 Q-10,300 75,600 T90,1200; M90,0 Q20,300 90,600 T90,1200" />
+      </path>
+        </g>
+      </svg>
+      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg2_blog" /></svg>
     </div>
   </div>
 
@@ -341,8 +430,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize Lenis smooth scroll
       const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        lerp: 0.08,
+        smoothWheel: true,
+        wheelMultiplier: 1.2
       });
 
       lenis.on('scroll', (e) => {
@@ -437,6 +527,16 @@
         }
       });
     })();
+  </script>
+
+  <!-- Interactive Parallax Script -->
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 40; // max shift 20px
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      document.documentElement.style.setProperty('--parallax-x', `${x}px`);
+      document.documentElement.style.setProperty('--parallax-y', `${y}px`);
+    });
   </script>
 </body>
 </html>
