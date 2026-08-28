@@ -49,107 +49,21 @@
   @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 </style>
 </head>
-<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased relative">
+<body class="bg-transparent text-zinc-900 dark:text-zinc-100 font-body antialiased relative">
+  <div class="fixed inset-0 bg-zinc-50 dark:bg-black -z-50 pointer-events-none"></div>
+  <!-- WebGL Fluid Background -->
+  <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full pointer-events-none -z-20"></canvas>
+
   <!-- Scroll Sequence Background -->
   <canvas id="scroll-seq-bg" class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"></canvas>
   <!-- Premium ambient blurred background -->
   <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
   <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 dark:bg-blue-400/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
-  <!-- Minimalist Vertical Threads Wave Background -->
-  <div style="view-transition-name: wave-container; transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0); transition: transform 0.1s ease-out;" class="fixed inset-y-0 left-0 w-[50vw] pointer-events-none -z-20 overflow-hidden mix-blend-multiply dark:mix-blend-screen opacity-100 dark:opacity-90 wave-parallax">
-    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-up_18s_linear_infinite]">
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="g1_blog" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#f97316"/>
-            <stop offset="100%" stop-color="#ec4899"/>
-          </linearGradient>
-        </defs>
-        <g id="wg1_blog" fill="none" stroke="url(#g1_blog)" vector-effect="non-scaling-stroke" opacity="1.0">
-          <path stroke-width="0.15">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M10,0 Q40,300 10,600 T10,1200; M10,0 Q70,300 25,600 T10,1200; M10,0 Q10,300 -5,600 T10,1200; M10,0 Q40,300 10,600 T10,1200" />
-      </path>
-      <path stroke-width="0.3">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M15,0 Q60,300 15,600 T15,1200; M15,0 Q90,300 30,600 T15,1200; M15,0 Q30,300 0,600 T15,1200; M15,0 Q60,300 15,600 T15,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M20,0 Q50,300 20,600 T20,1200; M20,0 Q80,300 35,600 T20,1200; M20,0 Q20,300 5,600 T20,1200; M20,0 Q50,300 20,600 T20,1200" />
-      </path>
-      <path stroke-width="0.4">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M25,0 Q80,300 25,600 T25,1200; M25,0 Q110,300 40,600 T25,1200; M25,0 Q50,300 10,600 T25,1200; M25,0 Q80,300 25,600 T25,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M30,0 Q90,300 30,600 T30,1200; M30,0 Q120,300 45,600 T30,1200; M30,0 Q60,300 15,600 T30,1200; M30,0 Q90,300 30,600 T30,1200" />
-      </path>
-      <path stroke-width="0.25">
-        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M35,0 Q70,300 35,600 T35,1200; M35,0 Q100,300 50,600 T35,1200; M35,0 Q40,300 20,600 T35,1200; M35,0 Q70,300 35,600 T35,1200" />
-      </path>
-      <path stroke-width="0.15">
-        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M40,0 Q60,300 40,600 T40,1200; M40,0 Q90,300 55,600 T40,1200; M40,0 Q30,300 25,600 T40,1200; M40,0 Q60,300 40,600 T40,1200" />
-      </path>
-      <path stroke-width="0.35">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M45,0 Q95,300 45,600 T45,1200; M45,0 Q125,300 60,600 T45,1200; M45,0 Q65,300 30,600 T45,1200; M45,0 Q95,300 45,600 T45,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M50,0 Q85,300 50,600 T50,1200; M50,0 Q115,300 65,600 T50,1200; M50,0 Q55,300 35,600 T50,1200; M50,0 Q85,300 50,600 T50,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q75,300 55,600 T55,1200; M55,0 Q105,300 70,600 T55,1200; M55,0 Q45,300 40,600 T55,1200; M55,0 Q75,300 55,600 T55,1200" />
-      </path>
-        </g>
-      </svg>
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg1_blog" /></svg>
-    </div>
-    
-    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-up_24s_linear_infinite]">
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="g2_blog" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2563eb"/>
-            <stop offset="100%" stop-color="#06b6d4"/>
-          </linearGradient>
-        </defs>
-        <g id="wg2_blog" fill="none" stroke="url(#g2_blog)" vector-effect="non-scaling-stroke" opacity="1.0">
-          <path stroke-width="0.15">
-        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M45,0 Q15,300 45,600 T45,1200; M45,0 Q45,300 60,600 T45,1200; M45,0 Q-15,300 30,600 T45,1200; M45,0 Q15,300 45,600 T45,1200" />
-      </path>
-      <path stroke-width="0.3">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M50,0 Q5,300 50,600 T50,1200; M50,0 Q35,300 65,600 T50,1200; M50,0 Q-25,300 35,600 T50,1200; M50,0 Q5,300 50,600 T50,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q25,300 55,600 T55,1200; M55,0 Q55,300 70,600 T55,1200; M55,0 Q-5,300 40,600 T55,1200; M55,0 Q25,300 55,600 T55,1200" />
-      </path>
-      <path stroke-width="0.4">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M60,0 Q10,300 60,600 T60,1200; M60,0 Q40,300 75,600 T60,1200; M60,0 Q-20,300 45,600 T60,1200; M60,0 Q10,300 60,600 T60,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M65,0 Q20,300 65,600 T65,1200; M65,0 Q50,300 80,600 T65,1200; M65,0 Q-10,300 50,600 T65,1200; M65,0 Q20,300 65,600 T65,1200" />
-      </path>
-      <path stroke-width="0.25">
-        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M70,0 Q15,300 70,600 T70,1200; M70,0 Q45,300 85,600 T70,1200; M70,0 Q-15,300 55,600 T70,1200; M70,0 Q15,300 70,600 T70,1200" />
-      </path>
-      <path stroke-width="0.15">
-        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M75,0 Q45,300 75,600 T75,1200; M75,0 Q75,300 90,600 T75,1200; M75,0 Q15,300 60,600 T75,1200; M75,0 Q45,300 75,600 T75,1200" />
-      </path>
-      <path stroke-width="0.35">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M80,0 Q0,300 80,600 T80,1200; M80,0 Q30,300 95,600 T80,1200; M80,0 Q-30,300 65,600 T80,1200; M80,0 Q0,300 80,600 T80,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M85,0 Q35,300 85,600 T85,1200; M85,0 Q65,300 100,600 T85,1200; M85,0 Q5,300 70,600 T85,1200; M85,0 Q35,300 85,600 T85,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M90,0 Q20,300 90,600 T90,1200; M90,0 Q50,300 105,600 T90,1200; M90,0 Q-10,300 75,600 T90,1200; M90,0 Q20,300 90,600 T90,1200" />
-      </path>
-        </g>
-      </svg>
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg2_blog" /></svg>
-    </div>
-  </div>
-
+  
   <!-- NAV -->
-  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="scrolled?'bg-white/60 dark:bg-zinc-950/60 backdrop-blur-2xl shadow-sm shadow-black/5':'bg-transparent'">
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+    :class="scrolled?'bg-white/60 dark:bg-black/60 backdrop-blur-2xl shadow-sm shadow-black/5':'bg-transparent'">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
       <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10" aria-label="Back to home">
         <span class="text-zinc-900 dark:text-white">Piyush</span><span class="text-accent">.</span>
@@ -175,7 +89,7 @@
         </button>
       </div>
     </nav>
-    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-white dark:bg-black border-t border-zinc-100 dark:border-zinc-950">
       <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium" role="list">
         <li><a href="index.html#services" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Services</a></li>
         <li><a href="projects.html" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Work</a></li>
@@ -198,10 +112,10 @@
 
         <!-- Filter tags -->
         <div class="reveal reveal-delay-3 flex flex-wrap gap-2 mt-8" x-data="{active:'all'}">
-          <button @click="active='all'" :class="active==='all'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">All</button>
-          <button @click="active='design'" :class="active==='design'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Design</button>
-          <button @click="active='dev'" :class="active==='dev'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Dev</button>
-          <button @click="active='freelance'" :class="active==='freelance'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Freelance</button>
+          <button @click="active='all'" :class="active==='all'?'bg-accent text-white border-accent':'bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">All</button>
+          <button @click="active='design'" :class="active==='design'?'bg-accent text-white border-accent':'bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Design</button>
+          <button @click="active='dev'" :class="active==='dev'?'bg-accent text-white border-accent':'bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Dev</button>
+          <button @click="active='freelance'" :class="active==='freelance'?'bg-accent text-white border-accent':'bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-accent'" class="text-sm px-4 py-1.5 rounded-full border transition-colors">Freelance</button>
         </div>
       </div>
     </section>
@@ -209,14 +123,14 @@
     <!-- FEATURED ARTICLE -->
     <section class="pb-16">
       <div class="max-w-6xl mx-auto px-6">
-        <a href="blog-article.html" class="reveal group block rounded-3xl overflow-hidden bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+        <a href="blog-article.html" class="reveal group block rounded-3xl overflow-hidden bg-zinc-50 dark:bg-black border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
           <div class="grid md:grid-cols-2">
             <div class="photo-frame h-64 md:h-auto">
               <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80" alt="Why I ditched CSS frameworks" loading="lazy"/>
             </div>
             <div class="p-8 md:p-12 flex flex-col justify-center">
               <div class="flex items-center gap-3 mb-4">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Design</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Design</span>
                 <span class="text-xs text-zinc-400">March 8, 2025 · 7 min read</span>
               </div>
               <h2 class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white mb-4 group-hover:text-accent transition-colors">Why I ditched heavy CSS frameworks for Tailwind — and what changed</h2>
@@ -233,13 +147,13 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-3 gap-6">
 
-          <article class="reveal reveal-delay-1 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-1 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=700&q=80" alt="Design systems" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Dev</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Dev</span>
                 <span class="text-xs text-zinc-400">Feb 21, 2025</span>
               </div>
               <a href="blog-article.html">
@@ -250,13 +164,13 @@
             </div>
           </article>
 
-          <article class="reveal reveal-delay-2 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-2 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80" alt="Freelance lessons" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Freelance</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Freelance</span>
                 <span class="text-xs text-zinc-400">Jan 14, 2025</span>
               </div>
               <a href="blog-article.html">
@@ -267,13 +181,13 @@
             </div>
           </article>
 
-          <article class="reveal reveal-delay-3 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-3 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=700&q=80" alt="Alpine.js article" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Dev</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Dev</span>
                 <span class="text-xs text-zinc-400">Dec 3, 2024</span>
               </div>
               <a href="blog-article.html">
@@ -284,13 +198,13 @@
             </div>
           </article>
 
-          <article class="reveal reveal-delay-1 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-1 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80" alt="UX laws article" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Design</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Design</span>
                 <span class="text-xs text-zinc-400">Nov 18, 2024</span>
               </div>
               <a href="blog-article.html">
@@ -301,13 +215,13 @@
             </div>
           </article>
 
-          <article class="reveal reveal-delay-2 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-2 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=700&q=80" alt="Client management" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Freelance</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Freelance</span>
                 <span class="text-xs text-zinc-400">Oct 30, 2024</span>
               </div>
               <a href="blog-article.html">
@@ -318,13 +232,13 @@
             </div>
           </article>
 
-          <article class="reveal reveal-delay-3 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+          <article class="reveal reveal-delay-3 card group bg-white dark:bg-black rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent">
             <div class="photo-frame w-full h-44">
               <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=700&q=80" alt="Dark mode article" loading="lazy"/>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Dev</span>
+                <span class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Dev</span>
                 <span class="text-xs text-zinc-400">Oct 5, 2024</span>
               </div>
               <a href="blog-article.html">
@@ -352,7 +266,7 @@
 
   </main>
 
-  <footer class="bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900 pt-16 pb-8 md:pt-24 relative z-10">
+  <footer class="bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-950 pt-16 pb-8 md:pt-24 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
         
@@ -529,14 +443,8 @@
     })();
   </script>
 
-  <!-- Interactive Parallax Script -->
-  <script>
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 40; // max shift 20px
-      const y = (e.clientY / window.innerHeight - 0.5) * 40;
-      document.documentElement.style.setProperty('--parallax-x', `${x}px`);
-      document.documentElement.style.setProperty('--parallax-y', `${y}px`);
-    });
-  </script>
+  
+
+  <script type="module" src="webgl-bg.js"></script>
 </body>
 </html>

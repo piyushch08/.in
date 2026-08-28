@@ -13,7 +13,7 @@
   <meta property="og:description" content="I design and build digital products that people love to use.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/piyushch08">
-  <title>Piyush - Senior Frontend Developer & UI/UX Specialist</title>
+  <title>Piyush -UI/UX & Frontend Developer</title>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23FF6B2B' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'><rect x='20' y='20' width='60' height='60' rx='12' transform='rotate(45 50 50)' /><path d='M42 38v24M42 38h12a8 8 0 0 1 0 16h-12' /></svg>">
 
@@ -61,7 +61,7 @@
     }
 
     body {
-      transition: background-color .3s, color .3s
+      transition: background-color .7s cubic-bezier(0.16, 1, 0.3, 1), color .7s cubic-bezier(0.16, 1, 0.3, 1)
     }
 
     /* noise overlay */
@@ -93,7 +93,7 @@
     .reveal {
       opacity: 0;
       transform: translateY(30px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)
     }
 
     .reveal.in {
@@ -185,14 +185,34 @@
       transform: translateY(-4px);
     }
 
-    @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @keyframes bg-wave-down {
-      0% { background-position: 0 -1200px; }
-      100% { background-position: 0 0; }
+    @keyframes wave {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
     }
+
+    @keyframes bg-wave-down {
+      0% {
+        background-position: 0 -1200px;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
     @keyframes bg-wave-up {
-      0% { background-position: 0 1200px; }
-      100% { background-position: 0 0; }
+      0% {
+        background-position: 0 1200px;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
     }
 
     /* card hover */
@@ -212,22 +232,40 @@
     [x-cloak] {
       display: none !important
     }
-  
-  @keyframes scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
-  @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-</style>
+
+    @keyframes scroll-down {
+      0% {
+        transform: translateY(-50%);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scroll-up {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-zinc-50 dark:bg-zinc-950 text-black dark:text-white antialiased relative overflow-hidden h-screen"
+<body class="bg-transparent text-black dark:text-white antialiased relative overflow-hidden h-screen"
   id="body-container">
+  <div class="fixed inset-0 bg-zinc-50 dark:bg-black -z-50 pointer-events-none"></div>
   <!-- Entrance Overlay -->
   <div id="entrance-overlay"
-    class="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 transition-opacity duration-1000 ease-in-out">
+    class="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-50 dark:bg-black transition-opacity duration-1000 ease-in-out">
     <div class="absolute inset-0 bg-accent/10 rounded-full blur-[120px] scale-150 pointer-events-none"></div>
     <div class="flex items-center relative z-10" id="entrance-content">
 
       <!-- Logo Container (Solid background to mask the text sliding from behind) -->
-      <div class="relative z-20 bg-zinc-50 dark:bg-zinc-950 rounded-2xl pr-1">
+      <div class="relative z-20 bg-zinc-50 dark:bg-black rounded-2xl pr-1">
         <svg viewBox="0 0 100 100"
           class="w-12 h-12 md:w-16 md:h-16 text-accent transition-all duration-[700ms] ease-out opacity-0 scale-50"
           id="entrance-logo" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
@@ -252,110 +290,15 @@
   <canvas id="scroll-seq-bg"
     class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"></canvas>
 
-  <!-- Premium ambient blurred background -->
-  <div
-    class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/50 dark:bg-accent/30 rounded-full blur-[120px] pointer-events-none z-0">
-  </div>
-  <div
-    class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/40 dark:bg-blue-400/20 rounded-full blur-[120px] pointer-events-none z-0">
-  </div>
-
-  <!-- Minimalist Vertical Threads Wave Background -->
-  <div style="view-transition-name: wave-container; transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0); transition: transform 0.1s ease-out;" class="fixed inset-y-0 left-0 w-[50vw] pointer-events-none -z-20 overflow-hidden mix-blend-multiply dark:mix-blend-screen opacity-100 dark:opacity-90 wave-parallax">
-    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-down_20s_linear_infinite]">
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="g1_index" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#f97316"/>
-            <stop offset="100%" stop-color="#ec4899"/>
-          </linearGradient>
-        </defs>
-        <g id="wg1_index" fill="none" stroke="url(#g1_index)" vector-effect="non-scaling-stroke" opacity="1.0">
-          <path stroke-width="0.15">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M10,0 Q40,300 10,600 T10,1200; M10,0 Q60,300 20,600 T10,1200; M10,0 Q20,300 0,600 T10,1200; M10,0 Q40,300 10,600 T10,1200" />
-      </path>
-      <path stroke-width="0.3">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M15,0 Q60,300 15,600 T15,1200; M15,0 Q80,300 25,600 T15,1200; M15,0 Q40,300 5,600 T15,1200; M15,0 Q60,300 15,600 T15,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M20,0 Q50,300 20,600 T20,1200; M20,0 Q70,300 30,600 T20,1200; M20,0 Q30,300 10,600 T20,1200; M20,0 Q50,300 20,600 T20,1200" />
-      </path>
-      <path stroke-width="0.4">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M25,0 Q80,300 25,600 T25,1200; M25,0 Q100,300 35,600 T25,1200; M25,0 Q60,300 15,600 T25,1200; M25,0 Q80,300 25,600 T25,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M30,0 Q90,300 30,600 T30,1200; M30,0 Q110,300 40,600 T30,1200; M30,0 Q70,300 20,600 T30,1200; M30,0 Q90,300 30,600 T30,1200" />
-      </path>
-      <path stroke-width="0.25">
-        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M35,0 Q70,300 35,600 T35,1200; M35,0 Q90,300 45,600 T35,1200; M35,0 Q50,300 25,600 T35,1200; M35,0 Q70,300 35,600 T35,1200" />
-      </path>
-      <path stroke-width="0.15">
-        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M40,0 Q60,300 40,600 T40,1200; M40,0 Q80,300 50,600 T40,1200; M40,0 Q40,300 30,600 T40,1200; M40,0 Q60,300 40,600 T40,1200" />
-      </path>
-      <path stroke-width="0.35">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M45,0 Q95,300 45,600 T45,1200; M45,0 Q115,300 55,600 T45,1200; M45,0 Q75,300 35,600 T45,1200; M45,0 Q95,300 45,600 T45,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M50,0 Q85,300 50,600 T50,1200; M50,0 Q105,300 60,600 T50,1200; M50,0 Q65,300 40,600 T50,1200; M50,0 Q85,300 50,600 T50,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q75,300 55,600 T55,1200; M55,0 Q95,300 65,600 T55,1200; M55,0 Q55,300 45,600 T55,1200; M55,0 Q75,300 55,600 T55,1200" />
-      </path>
-        </g>
-      </svg>
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg1_index" /></svg>
-    </div>
-    
-    <div class="absolute inset-0 w-full h-[200%] flex flex-col [animation:scroll-down_28s_linear_infinite]">
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="g2_index" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2563eb"/>
-            <stop offset="100%" stop-color="#06b6d4"/>
-          </linearGradient>
-        </defs>
-        <g id="wg2_index" fill="none" stroke="url(#g2_index)" vector-effect="non-scaling-stroke" opacity="1.0">
-          <path stroke-width="0.15">
-        <animate attributeName="d" dur="13s" repeatCount="indefinite" values="M45,0 Q15,300 45,600 T45,1200; M45,0 Q35,300 55,600 T45,1200; M45,0 Q-5,300 35,600 T45,1200; M45,0 Q15,300 45,600 T45,1200" />
-      </path>
-      <path stroke-width="0.3">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M50,0 Q5,300 50,600 T50,1200; M50,0 Q25,300 60,600 T50,1200; M50,0 Q-15,300 40,600 T50,1200; M50,0 Q5,300 50,600 T50,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M55,0 Q25,300 55,600 T55,1200; M55,0 Q45,300 65,600 T55,1200; M55,0 Q5,300 45,600 T55,1200; M55,0 Q25,300 55,600 T55,1200" />
-      </path>
-      <path stroke-width="0.4">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M60,0 Q10,300 60,600 T60,1200; M60,0 Q30,300 70,600 T60,1200; M60,0 Q-10,300 50,600 T60,1200; M60,0 Q10,300 60,600 T60,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M65,0 Q20,300 65,600 T65,1200; M65,0 Q40,300 75,600 T65,1200; M65,0 Q0,300 55,600 T65,1200; M65,0 Q20,300 65,600 T65,1200" />
-      </path>
-      <path stroke-width="0.25">
-        <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M70,0 Q15,300 70,600 T70,1200; M70,0 Q35,300 80,600 T70,1200; M70,0 Q-5,300 60,600 T70,1200; M70,0 Q15,300 70,600 T70,1200" />
-      </path>
-      <path stroke-width="0.15">
-        <animate attributeName="d" dur="16s" repeatCount="indefinite" values="M75,0 Q45,300 75,600 T75,1200; M75,0 Q65,300 85,600 T75,1200; M75,0 Q25,300 65,600 T75,1200; M75,0 Q45,300 75,600 T75,1200" />
-      </path>
-      <path stroke-width="0.35">
-        <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M80,0 Q0,300 80,600 T80,1200; M80,0 Q20,300 90,600 T80,1200; M80,0 Q-20,300 70,600 T80,1200; M80,0 Q0,300 80,600 T80,1200" />
-      </path>
-      <path stroke-width="0.1">
-        <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M85,0 Q35,300 85,600 T85,1200; M85,0 Q55,300 95,600 T85,1200; M85,0 Q15,300 75,600 T85,1200; M85,0 Q35,300 85,600 T85,1200" />
-      </path>
-      <path stroke-width="0.2">
-        <animate attributeName="d" dur="14s" repeatCount="indefinite" values="M90,0 Q20,300 90,600 T90,1200; M90,0 Q40,300 100,600 T90,1200; M90,0 Q0,300 80,600 T90,1200; M90,0 Q20,300 90,600 T90,1200" />
-      </path>
-        </g>
-      </svg>
-      <svg class="w-full h-1/2" viewBox="0 0 100 1200" preserveAspectRatio="none"><use href="#wg2_index" /></svg>
-    </div>
-  </div>
-
+  <!-- Interactive 3D WebGL Background (Fluid Gradient) -->
+  <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full -z-30 pointer-events-none"
+    style="view-transition-name: wave-container;"></canvas>
+  <script type="module" src="./webgl-bg.js"></script>
 
 
   <!-- ═══ NAV ═══ -->
-  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-    :class="sc?'bg-white/60 dark:bg-zinc-950/60 backdrop-blur-2xl shadow-sm shadow-black/5':''">
+  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+    :class="sc?'bg-white/60 dark:bg-black/60 backdrop-blur-2xl shadow-sm shadow-black/5':''">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
 
       <a href="#hero"
@@ -404,7 +347,7 @@
         </button>
         <!-- hire me -->
         <a href="#contact"
-          class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
+          class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
           Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
@@ -424,11 +367,11 @@
     </nav>
 
     <!-- mobile menu -->
-    <div x-show="mm" x-cloak x-transition:enter="transition ease-out duration-200"
+    <div x-show="mm" x-cloak x-transition:enter="transition ease-out duration-500"
       x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0"
       x-transition:leave-end="opacity-0 -translate-y-2"
-      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      class="md:hidden bg-white dark:bg-black border-t border-zinc-100 dark:border-zinc-950">
       <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
         <li><a href="#services" @click="mm=false"
             class="block text-black dark:text-white hover:text-accent transition-colors">Services</a></li>
@@ -440,7 +383,7 @@
             class="block text-black dark:text-white hover:text-accent transition-colors">Blog</a></li>
         <li><a href="#contact" @click="mm=false"
             class="block text-black dark:text-white hover:text-accent transition-colors">Contact</a></li>
-        <li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">
+        <li class="pt-2 border-t border-zinc-100 dark:border-zinc-950">
           <a href="#contact" @click="mm=false"
             class="inline-flex shimmer bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me →</a>
         </li>
@@ -455,11 +398,12 @@
       <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/30 rounded-full blur-[100px] pointer-events-none z-0"
         aria-hidden="true"></div>
       <div
-        class="absolute bottom-1/4 left-0 w-64 h-64 bg-blue-500/20 dark:bg-zinc-800/40 rounded-full blur-[100px] pointer-events-none z-0"
+        class="absolute bottom-1/4 left-0 w-64 h-64 bg-blue-500/20 dark:bg-zinc-900/40 rounded-full blur-[100px] pointer-events-none z-0"
         aria-hidden="true"></div>
 
       <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
         <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+
 
           <div class="max-w-2xl">
             <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for work</p>
@@ -475,14 +419,14 @@
             </p>
             <div class="reveal d3 flex flex-wrap gap-4">
               <a href="#work"
-                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-black font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
+                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-black font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
                 View my work
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
               <a href="#contact"
-                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-black dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get
+                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-800 text-black dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get
                 in touch</a>
             </div>
             <div class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-zinc-200/50 dark:border-zinc-800/50">
@@ -508,9 +452,9 @@
               <div
                 class="w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-accent via-orange-400 to-blue-500 shadow-2xl">
                 <!-- Inner container to hold image -->
-                <div class="w-full h-full rounded-full overflow-hidden bg-white dark:bg-zinc-950">
+                <div class="w-full h-full rounded-full overflow-hidden bg-white dark:bg-black">
                   <img src="image.png" alt="Piyush Chauhan"
-                    class="w-full h-full object-cover object-[50%_10%] transform group-hover:scale-105 transition-all duration-700" />
+                    class="w-full h-full object-cover object-[50%_10%] transform group-hover:scale-105 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 </div>
               </div>
             </div>
@@ -530,9 +474,9 @@
         <div class="grid md:grid-cols-3 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d1 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div
-              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2" />
@@ -546,7 +490,7 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d2 card-h group bg-zinc-900/60 dark:bg-zinc-800/60 backdrop-blur-2xl rounded-3xl p-8 border border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-900/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-zinc-900/60 dark:bg-zinc-900/60 backdrop-blur-2xl rounded-3xl p-8 border border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-900/20 dark:shadow-none">
             <div
               class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -561,9 +505,9 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d3 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div
-              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
@@ -591,14 +535,14 @@
               work</h2>
           </div>
           <a href="projects.html"
-            class="hover:scale-105 transition-transform duration-300 reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
+            class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
             projects →</a>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 card-h reveal d1 group rounded-3xl overflow-hidden bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
                 alt="Data Analytics Dashboard" loading="lazy">
@@ -606,9 +550,9 @@
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">Data</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-3 py-1 rounded-full">Data</span>
                 <span
-                  class="text-xs bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white px-3 py-1 rounded-full">Dashboard</span>
+                  class="text-xs bg-zinc-200 dark:bg-zinc-900 text-black dark:text-white px-3 py-1 rounded-full">Dashboard</span>
               </div>
               <a href="case-study.html">
                 <h3 class="text-accent font-display font-bold text-xl mb-1.5">Data Analytics Dashboard
@@ -618,14 +562,14 @@
                 analytics
                 dashboard offering deep insights, data visualization, and real-time metrics tracking.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 card-h reveal d2 group rounded-3xl overflow-hidden bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80"
                 alt="Interactive Portfolio" loading="lazy">
@@ -633,9 +577,9 @@
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">Web</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-3 py-1 rounded-full">Web</span>
                 <span
-                  class="text-xs bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white px-3 py-1 rounded-full">Portfolio</span>
+                  class="text-xs bg-zinc-200 dark:bg-zinc-900 text-black dark:text-white px-3 py-1 rounded-full">Portfolio</span>
               </div>
               <a href="case-study.html">
                 <h3 class="text-accent font-display font-bold text-xl mb-1.5">Interactive Portfolio
@@ -645,14 +589,14 @@
                 and
                 minimalist interactive portfolio to elegantly showcase digital projects and skills.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 card-h reveal d3 group rounded-3xl overflow-hidden bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"
                 alt="To do list (Planner)" loading="lazy">
@@ -660,9 +604,9 @@
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">App</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-3 py-1 rounded-full">App</span>
                 <span
-                  class="text-xs bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white px-3 py-1 rounded-full">Productivity</span>
+                  class="text-xs bg-zinc-200 dark:bg-zinc-900 text-black dark:text-white px-3 py-1 rounded-full">Productivity</span>
               </div>
               <a href="case-study.html">
                 <h3 class="text-accent font-display font-bold text-xl mb-1.5">To do list (Planner)
@@ -672,14 +616,14 @@
                 beautifully
                 designed daily planner and to-do list application for enhanced productivity.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 card-h reveal d4 group rounded-3xl overflow-hidden bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d4 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80"
                 alt="Interactive Canvas" loading="lazy">
@@ -687,9 +631,9 @@
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">Canvas</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-3 py-1 rounded-full">Canvas</span>
                 <span
-                  class="text-xs bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white px-3 py-1 rounded-full">Creative</span>
+                  class="text-xs bg-zinc-200 dark:bg-zinc-900 text-black dark:text-white px-3 py-1 rounded-full">Creative</span>
               </div>
               <a href="case-study.html">
                 <h3 class="text-accent font-display font-bold text-xl mb-1.5">Interactive Canvas</h3>
@@ -698,7 +642,7 @@
                 canvas
                 application allowing users to draw, edit, and collaborate in real-time.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
@@ -723,9 +667,9 @@
               <!-- Gradient border wrapper -->
               <div
                 class="w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-accent via-orange-400 to-blue-500 shadow-2xl">
-                <div class="w-full h-full rounded-full overflow-hidden bg-white dark:bg-zinc-950">
+                <div class="w-full h-full rounded-full overflow-hidden bg-white dark:bg-black">
                   <img src="image.png" alt="Piyush Chauhan" loading="lazy"
-                    class="object-cover object-[50%_10%] h-full w-full transition-transform duration-700 group-hover:scale-105">
+                    class="object-cover object-[50%_10%] h-full w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105">
                 </div>
               </div>
             </div>
@@ -754,22 +698,22 @@
                 tools</p>
               <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Data
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Data
                   Science</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Web
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Web
                   Development</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Python</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Python</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C++</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C++</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">git
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">git
                   & github</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-800/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">ui
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">ui
                   & ux design</span>
               </div>
             </div>
@@ -781,7 +725,7 @@
 
     <!-- ═══ KEY HIGHLIGHTS ═══ -->
     <section id="highlights"
-      class="py-16 md:py-20 lg:py-24 relative z-10 border-t border-zinc-100 dark:border-zinc-900/50">
+      class="py-16 md:py-20 lg:py-24 relative z-10 border-t border-zinc-100 dark:border-zinc-950/50">
       <div class="max-w-6xl mx-auto px-6">
         <div class="mb-14">
           <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Snapshot</p>
@@ -792,7 +736,7 @@
 
           <!-- Education -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d1 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Education</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Pursuing Computer Science
               Engineering &
@@ -801,7 +745,7 @@
 
           <!-- Core Skills -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d2 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Core Skills</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Proficiency in C, C++, and
               Python,
@@ -810,7 +754,7 @@
 
           <!-- Interests -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d3 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Interests</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Data science applications,
               software
@@ -819,7 +763,7 @@
 
           <!-- Mindset -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d4 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d4 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Mindset</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">A continuous learner eager to
               turn
@@ -842,14 +786,14 @@
               blog</h2>
           </div>
           <a href="blog.html"
-            class="hover:scale-105 transition-transform duration-300 reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
+            class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
             articles →</a>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d1 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80"
                 alt="Why I ditched CSS frameworks" loading="lazy">
@@ -857,7 +801,7 @@
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Design</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Design</span>
                 <span class="text-xs text-black">Mar 8, 2025</span>
               </div>
               <a href="blog-article.html">
@@ -867,14 +811,14 @@
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">After years of fighting
                 specificity wars, here's what finally convinced me to make the switch.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d2 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=700&q=80" alt="Design systems"
                 loading="lazy">
@@ -882,7 +826,7 @@
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Dev</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Dev</span>
                 <span class="text-xs text-black">Feb 21, 2025</span>
               </div>
               <a href="blog-article.html">
@@ -893,14 +837,14 @@
                 docs — the
                 process I follow to spin up a coherent system in 48 hours.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 reveal d3 card-h group bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80" alt="Freelance lessons"
                 loading="lazy">
@@ -908,7 +852,7 @@
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
-                  class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Freelance</span>
+                  class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Freelance</span>
                 <span class="text-xs text-black">Jan 14, 2025</span>
               </div>
               <a href="blog-article.html">
@@ -919,7 +863,7 @@
                 scope creep —
                 the things nobody tells you before you go solo.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-300 inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
@@ -933,7 +877,7 @@
     <section id="contact" class="py-16 md:py-20 lg:py-24 relative z-10">
       <div class="max-w-6xl mx-auto px-6">
         <div
-          class="bg-zinc-900/70 dark:bg-zinc-800/70 backdrop-blur-2xl border border-zinc-700/50 rounded-3xl p-10 md:p-16 relative overflow-hidden shadow-2xl">
+          class="bg-zinc-900/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-zinc-700/50 rounded-3xl p-10 md:p-16 relative overflow-hidden shadow-2xl">
           <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"></div>
           <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"
@@ -1027,7 +971,7 @@
                       class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
                   </div>
                   <button type="submit"
-                    class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors">
+                    class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors">
                     Send message →
                   </button>
                 </div>
@@ -1042,7 +986,7 @@
   </main>
 
   <footer
-    class="bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900 pt-16 pb-8 md:pt-24 relative z-10">
+    class="bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-950 pt-16 pb-8 md:pt-24 relative z-10">
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
 
@@ -1065,7 +1009,7 @@
           <!-- Socials -->
           <div class="flex items-center gap-3">
             <a href="https://github.com/piyushch08" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -1073,7 +1017,7 @@
             </a>
             <a href="https://www.linkedin.com/in/piyush-chauhan-353822385" target="_blank" rel="noopener noreferrer"
               aria-label="LinkedIn"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -1081,7 +1025,7 @@
             </a>
             <a href="https://www.instagram.com/piyu5h.08?igsh=MXJvcnlnb2hwZHliMQ==" target="_blank"
               rel="noopener noreferrer" aria-label="Instagram"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -1340,15 +1284,8 @@
     }
   </script>
 
-  <!-- Interactive Parallax Script -->
-  <script>
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 40; // max shift 20px
-      const y = (e.clientY / window.innerHeight - 0.5) * 40;
-      document.documentElement.style.setProperty('--parallax-x', `${x}px`);
-      document.documentElement.style.setProperty('--parallax-y', `${y}px`);
-    });
-  </script>
+
+  <script type="module" src="webgl-bg.js"></script>
 </body>
 
 </html>
