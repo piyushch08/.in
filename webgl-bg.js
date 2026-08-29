@@ -208,12 +208,16 @@ class WebGLBackground {
                     // Multiply by uActive so it completely fades out when mouse is idle
                     float influence = smoothstep(0.35, 0.0, mouseDist) * uActive;
                     
+                    // Scale physical liquid warp intensity based on theme
+                    // Dark mode (0.0) gets 2.0x, Light mode (1.0) gets 0.5x
+                    float warpIntensity = mix(2.0, 0.5, uThemeMode);
+
                     // Direction-aware push: noise warps AWAY from cursor
                     vec2 pushDir = normalize(stToMouse + 0.001);
-                    vec2 mouseWarp = pushDir * influence * 1.0; // Slightly softer push
+                    vec2 mouseWarp = pushDir * influence * 1.0 * warpIntensity; // Scaled local push
                     
                     // Add velocity-based streaking for natural motion feel
-                    vec2 velWarp = uMouseVelocity * influence * 2.5; // Slightly softer streaking
+                    vec2 velWarp = uMouseVelocity * influence * 2.5 * warpIntensity; // Scaled streaking
                     
                     vec2 totalMouseInfluence = mouseWarp + velWarp;
 
@@ -238,9 +242,9 @@ class WebGLBackground {
                             if (distToCrest < width) {
                                 float intensity = (1.0 - age / 4.0) * smoothstep(width, 0.0, distToCrest) * uRipples[i].w;
                                 float wave = sin((dist - radius) * 40.0) * intensity;
-                                rippleWarp += normalize(d + 0.0001) * wave * 0.45; // Increased wave warp
-                                rippleGlow += max(0.0, wave) * 1.5; // Only crest glows
-                                rippleShadow += max(0.0, -wave) * 1.2; // Trough casts shadow
+                                rippleWarp += normalize(d + 0.0001) * wave * 0.45 * warpIntensity; 
+                                rippleGlow += max(0.0, wave) * 1.5 * warpIntensity; 
+                                rippleShadow += max(0.0, -wave) * 1.2 * warpIntensity; 
                             }
                         }
                     }
@@ -264,16 +268,14 @@ class WebGLBackground {
                     float t = combined * 0.5 + 0.5;
                     t = clamp(t, 0.0, 1.0);
 
-                    // Multi-stop gradient: creates organic color blobs
+                    // Multi-stop gradient without looping (prevents topological 'threads' or sharp ridges)
                     vec3 color;
-                    if (t < 0.25) {
-                        color = mix(uColor1, uColor2, t * 4.0);
-                    } else if (t < 0.5) {
-                        color = mix(uColor2, uColor3, (t - 0.25) * 4.0);
-                    } else if (t < 0.75) {
-                        color = mix(uColor3, uColor4, (t - 0.5) * 4.0);
+                    if (t < 0.33) {
+                        color = mix(uColor1, uColor2, t * 3.0);
+                    } else if (t < 0.66) {
+                        color = mix(uColor2, uColor3, (t - 0.33) * 3.0);
                     } else {
-                        color = mix(uColor4, uColor1, (t - 0.75) * 4.0);
+                        color = mix(uColor3, uColor4, (t - 0.66) * 3.0);
                     }
 
                     // Add the "very subtle black" (dark warm grey) as a rare deep shadow in the noise valleys
@@ -383,13 +385,11 @@ class WebGLBackground {
         if (this.fluidUniforms) {
             // Handle idle fade out
             const timeSinceMove = (performance.now() - this.lastMoveTime) / 1000.0;
-            const targetActive = timeSinceMove > 1.5 ? 0.0 : 1.0;
+            const targetActive = timeSinceMove > 0.05 ? 0.0 : 1.0;
             
-            if (targetActive === 1.0) {
-                this.fluidUniforms.uActive.value = Math.min(this.fluidUniforms.uActive.value + delta * 5.0, 1.0); // fast fade in
-            } else {
-                this.fluidUniforms.uActive.value = Math.max(this.fluidUniforms.uActive.value - delta * 0.6, 0.0); // smooth fade out
-            }
+            // Refined exponential easing for incredibly smooth fade in/out transitions
+            const lerpSpeed = targetActive === 1.0 ? 0.15 : 0.03;
+            this.fluidUniforms.uActive.value += (targetActive - this.fluidUniforms.uActive.value) * lerpSpeed;
 
             this.fluidUniforms.uTime.value = this.shaderTime;
             this.fluidUniforms.uMouse.value.copy(this.mouse);
