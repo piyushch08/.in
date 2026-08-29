@@ -61,7 +61,7 @@
     }
 
     body {
-      transition: background-color .7s cubic-bezier(0.16, 1, 0.3, 1), color .7s cubic-bezier(0.16, 1, 0.3, 1)
+      transition: background-color .8s cubic-bezier(0.25, 1, 0.5, 1), color .8s cubic-bezier(0.25, 1, 0.5, 1)
     }
 
     /* noise overlay */
@@ -93,7 +93,8 @@
     .reveal {
       opacity: 0;
       transform: translateY(30px) scale(0.98);
-      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: opacity, transform;
     }
 
     .reveal.in {
@@ -102,19 +103,19 @@
     }
 
     .d1 {
-      transition-delay: .08s
+      transition-delay: .1s
     }
 
     .d2 {
-      transition-delay: .16s
+      transition-delay: .2s
     }
 
     .d3 {
-      transition-delay: .24s
+      transition-delay: .3s
     }
 
     .d4 {
-      transition-delay: .32s
+      transition-delay: .4s
     }
 
     /* nav underline animation */
@@ -130,7 +131,7 @@
       width: 0;
       height: 1.5px;
       background: currentColor;
-      transition: width .22s cubic-bezier(.4, 0, .2, 1)
+      transition: width .3s cubic-bezier(0.25, 1, 0.5, 1)
     }
 
     .nl:hover::after,
@@ -157,7 +158,7 @@
       height: 100%;
       background: rgba(255, 255, 255, .18);
       transform: skewX(-20deg);
-      transition: left .4s cubic-bezier(.4, 0, .2, 1)
+      transition: left .6s cubic-bezier(0.25, 1, 0.5, 1)
     }
 
     .shimmer:hover::after {
@@ -178,11 +179,11 @@
     }
 
     .project-card {
-      transition: transform .3s cubic-bezier(.4, 0, .2, 1), border-color .2s;
+      transition: transform .4s cubic-bezier(0.25, 1, 0.5, 1), border-color .3s;
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
     }
 
     @keyframes wave {
@@ -217,11 +218,11 @@
 
     /* card hover */
     .card-h {
-      transition: transform .28s cubic-bezier(.4, 0, .2, 1), border-color .18s
+      transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1), border-color .3s, box-shadow .4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .card-h:hover {
-      transform: translateY(-4px)
+      transform: translateY(-6px) scale(1.01);
     }
 
     /* skill tag */
@@ -297,7 +298,7 @@
 
 
   <!-- ═══ NAV ═══ -->
-  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
     :class="sc?'bg-white/60 dark:bg-black/60 backdrop-blur-2xl shadow-sm shadow-black/5':''">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
 
@@ -347,7 +348,7 @@
         </button>
         <!-- hire me -->
         <a href="#contact"
-          class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
+          class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light">
           Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
@@ -374,15 +375,15 @@
       class="md:hidden bg-white dark:bg-black border-t border-zinc-100 dark:border-zinc-950">
       <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
         <li><a href="#services" @click="mm=false"
-            class="block text-black dark:text-white hover:text-accent transition-colors">Services</a></li>
+            class="block text-black dark:text-white hover:text-accent transition-all duration-400">Services</a></li>
         <li><a href="#work" @click="mm=false"
-            class="block text-black dark:text-white hover:text-accent transition-colors">Work</a></li>
+            class="block text-black dark:text-white hover:text-accent transition-all duration-400">Work</a></li>
         <li><a href="#about" @click="mm=false"
-            class="block text-black dark:text-white hover:text-accent transition-colors">About</a></li>
+            class="block text-black dark:text-white hover:text-accent transition-all duration-400">About</a></li>
         <li><a href="#blog" @click="mm=false"
-            class="block text-black dark:text-white hover:text-accent transition-colors">Blog</a></li>
+            class="block text-black dark:text-white hover:text-accent transition-all duration-400">Blog</a></li>
         <li><a href="#contact" @click="mm=false"
-            class="block text-black dark:text-white hover:text-accent transition-colors">Contact</a></li>
+            class="block text-black dark:text-white hover:text-accent transition-all duration-400">Contact</a></li>
         <li class="pt-2 border-t border-zinc-100 dark:border-zinc-950">
           <a href="#contact" @click="mm=false"
             class="inline-flex shimmer bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me →</a>
@@ -419,14 +420,14 @@
             </p>
             <div class="reveal d3 flex flex-wrap gap-4">
               <a href="#work"
-                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-black font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
+                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-black font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 text-sm">
                 View my work
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
               <a href="#contact"
-                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-800 text-black dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get
+                class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-800 text-black dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 text-sm">Get
                 in touch</a>
             </div>
             <div class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-zinc-200/50 dark:border-zinc-800/50">
@@ -474,9 +475,9 @@
         <div class="grid md:grid-cols-3 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div
-              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-all duration-400">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2" />
@@ -490,9 +491,9 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-zinc-900/60 dark:bg-zinc-900/60 backdrop-blur-2xl rounded-3xl p-8 border border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-900/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d2 card-h group bg-zinc-900/60 dark:bg-zinc-900/60 backdrop-blur-2xl rounded-3xl p-8 border border-zinc-700/50 hover:border-accent shadow-xl shadow-zinc-900/20 dark:shadow-none">
             <div
-              class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
+              class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-all duration-400">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -505,9 +506,9 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div
-              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-900 rounded-xl mb-6 group-hover:bg-accent/10 transition-all duration-400">
               <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
@@ -535,14 +536,14 @@
               work</h2>
           </div>
           <a href="projects.html"
-            class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
+            class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent self-start sm:self-auto nl">All
             projects →</a>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
                 alt="Data Analytics Dashboard" loading="lazy">
@@ -562,14 +563,14 @@
                 analytics
                 dashboard offering deep insights, data visualization, and real-time metrics tracking.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80"
                 alt="Interactive Portfolio" loading="lazy">
@@ -589,14 +590,14 @@
                 and
                 minimalist interactive portfolio to elegantly showcase digital projects and skills.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"
                 alt="To do list (Planner)" loading="lazy">
@@ -616,14 +617,14 @@
                 beautifully
                 designed daily planner and to-do list application for enhanced productivity.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-h reveal d4 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d4 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80"
                 alt="Interactive Canvas" loading="lazy">
@@ -642,7 +643,7 @@
                 canvas
                 application allowing users to draw, edit, and collaborate in real-time.</p>
               <a href="case-study.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">View
                 case
                 study →</a>
             </div>
@@ -698,22 +699,22 @@
                 tools</p>
               <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Data
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">Data
                   Science</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Web
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">Web
                   Development</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">Python</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">Python</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">C</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">C++</span>
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">C++</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">git
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">git
                   & github</span>
                 <span role="listitem"
-                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">ui
+                  class="stag text-sm bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 text-black dark:text-white px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-all duration-400">ui
                   & ux design</span>
               </div>
             </div>
@@ -736,7 +737,7 @@
 
           <!-- Education -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Education</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Pursuing Computer Science
               Engineering &
@@ -745,7 +746,7 @@
 
           <!-- Core Skills -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Core Skills</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Proficiency in C, C++, and
               Python,
@@ -754,7 +755,7 @@
 
           <!-- Interests -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Interests</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">Data science applications,
               software
@@ -763,7 +764,7 @@
 
           <!-- Mindset -->
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d4 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d4 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl p-8 border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <h3 class="text-accent font-display font-bold text-xl mb-3">Mindset</h3>
             <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed">A continuous learner eager to
               turn
@@ -786,14 +787,14 @@
               blog</h2>
           </div>
           <a href="blog.html"
-            class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent transition-colors self-start sm:self-auto nl">All
+            class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 text-sm font-medium text-black dark:text-white hover:text-accent self-start sm:self-auto nl">All
             articles →</a>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80"
                 alt="Why I ditched CSS frameworks" loading="lazy">
@@ -805,20 +806,20 @@
                 <span class="text-xs text-black">Mar 8, 2025</span>
               </div>
               <a href="blog-article.html">
-                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-colors">
+                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   Why I ditched heavy CSS frameworks for Tailwind</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">After years of fighting
                 specificity wars, here's what finally convinced me to make the switch.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=700&q=80" alt="Design systems"
                 loading="lazy">
@@ -830,21 +831,21 @@
                 <span class="text-xs text-black">Feb 21, 2025</span>
               </div>
               <a href="blog-article.html">
-                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-colors">
+                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   Building a design system from scratch in a weekend</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">Tokens, components,
                 docs — the
                 process I follow to spin up a coherent system in 48 hours.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-44">
               <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80" alt="Freelance lessons"
                 loading="lazy">
@@ -856,14 +857,14 @@
                 <span class="text-xs text-black">Jan 14, 2025</span>
               </div>
               <a href="blog-article.html">
-                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-colors">
+                <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   5 lessons from my first year of full-time freelancing</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">Contracts, pricing,
                 scope creep —
                 the things nobody tells you before you go solo.</p>
               <a href="blog-article.html"
-                class="hover:scale-105 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
+                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
                 more
                 →</a>
             </div>
@@ -894,9 +895,9 @@
 
               <div class="reveal d3 flex flex-col gap-4">
                 <a href="mailto:piyush.ch407@gmail.com"
-                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-colors">
+                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-all duration-400">
                   <span
-                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-all duration-400 shrink-0">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -905,9 +906,9 @@
                   <span class="text-sm">piyush.ch407@gmail.com</span>
                 </a>
                 <a href="https://www.linkedin.com/in/piyush-chauhan-353822385" rel="noopener noreferrer" target="_blank"
-                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-colors">
+                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-all duration-400">
                   <span
-                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-all duration-400 shrink-0">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path
                         d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -916,9 +917,9 @@
                   <span class="text-sm">linkedin.com/in/piyush-chauhan</span>
                 </a>
                 <a href="https://github.com/piyushch08" rel="noopener noreferrer" target="_blank"
-                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-colors">
+                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-all duration-400">
                   <span
-                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-all duration-400 shrink-0">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path
                         d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -928,9 +929,9 @@
                 </a>
                 <a href="https://www.instagram.com/piyu5h.08?igsh=MXJvcnlnb2hwZHliMQ==" rel="noopener noreferrer"
                   target="_blank"
-                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-colors">
+                  class="group flex items-center gap-3 text-zinc-300 hover:text-white transition-all duration-400">
                   <span
-                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-all duration-400 shrink-0">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path
                         d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -949,29 +950,29 @@
                       <label for="fname" class="block text-xs font-medium text-zinc-300 mb-1.5">Name <span
                           aria-hidden="true">*</span></label>
                       <input type="text" id="fname" name="name" placeholder="Jane Smith" required autocomplete="name"
-                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-all duration-400">
                     </div>
                     <div>
                       <label for="femail" class="block text-xs font-medium text-zinc-300 mb-1.5">Email <span
                           aria-hidden="true">*</span></label>
                       <input type="email" id="femail" name="email" placeholder="jane@company.com" required
                         autocomplete="email"
-                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-all duration-400">
                     </div>
                   </div>
                   <div>
                     <label for="fsubject" class="block text-xs font-medium text-zinc-300 mb-1.5">Subject</label>
                     <input type="text" id="fsubject" name="subject" placeholder="Project inquiry"
-                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-all duration-400">
                   </div>
                   <div>
                     <label for="fmessage" class="block text-xs font-medium text-zinc-300 mb-1.5">Message <span
                         aria-hidden="true">*</span></label>
                     <textarea id="fmessage" name="message" rows="4" placeholder="Tell me about your project..." required
-                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
+                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-all duration-400 resize-none"></textarea>
                   </div>
                   <button type="submit"
-                    class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors">
+                    class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light">
                     Send message →
                   </button>
                 </div>
@@ -1009,7 +1010,7 @@
           <!-- Socials -->
           <div class="flex items-center gap-3">
             <a href="https://github.com/piyushch08" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -1017,7 +1018,7 @@
             </a>
             <a href="https://www.linkedin.com/in/piyush-chauhan-353822385" target="_blank" rel="noopener noreferrer"
               aria-label="LinkedIn"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -1025,7 +1026,7 @@
             </a>
             <a href="https://www.instagram.com/piyu5h.08?igsh=MXJvcnlnb2hwZHliMQ==" target="_blank"
               rel="noopener noreferrer" aria-label="Instagram"
-              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
+              class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -1159,9 +1160,9 @@
 
                 // Initialize Lenis smooth scroll after the overlay is removed
                 const lenis = new Lenis({
-                  lerp: 0.08,
+                  lerp: 0.06,
                   smoothWheel: true,
-                  wheelMultiplier: 1.2
+                  wheelMultiplier: 1.0
                 });
 
                 lenis.on('scroll', (e) => {

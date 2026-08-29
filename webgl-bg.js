@@ -9,7 +9,7 @@ class WebGLBackground {
         this.createFluidBackground();
         this.addMouseInteraction();
         this.animate();
-        
+
         window.addEventListener('resize', this.onWindowResize.bind(this));
     }
 
@@ -28,6 +28,15 @@ class WebGLBackground {
         this.targetMouse = new THREE.Vector2(0.5, 0.5);
         this.mouseVelocity = new THREE.Vector2(0.0, 0.0);
         this.prevMouse = new THREE.Vector2(0.5, 0.5);
+        this.lastMoveTime = performance.now();
+
+        this.ripples = [];
+        this.maxRipples = 10;
+        for (let i = 0; i < this.maxRipples; i++) {
+            this.ripples.push(new THREE.Vector4(0, 0, -999.0, 0)); // x, y, time, intensity
+        }
+        this.rippleIndex = 0;
+        this.lastRipplePos = new THREE.Vector2(0.5, 0.5);
 
         // Accessibility: Prefers Reduced Motion
         this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -37,7 +46,7 @@ class WebGLBackground {
 
         // Theme observer
         const updateColors = () => {
-            if(!this.fluidUniforms) return;
+            if (!this.fluidUniforms) return;
             const isDark = document.documentElement.classList.contains('dark');
             if (isDark) {
                 // Dark mode: Deep black base, subtle warm/orange and faint grey highlights
@@ -47,15 +56,17 @@ class WebGLBackground {
                 this.fluidUniforms.uColor4.value.set('#0a0a0a');  // almost black grey
                 this.fluidUniforms.uColor5.value.set('#9a3412');  // darker orange accent
                 this.fluidUniforms.uBrightness.value = 0.5;
+                this.fluidUniforms.uThemeMode.value = 0.0; // 0.0 = dark mode
             } else {
-                // Light mode: Soft white/light-gray base, subtle orange/cream, and very subtle black (dark grey)
-                this.fluidUniforms.uColor1.value.set('#ffffff');  // white base
-                this.fluidUniforms.uColor2.value.set('#f3f4f6');  // very light gray
-                this.fluidUniforms.uColor3.value.set('#ffedd5');  // subtle orange/white
-                this.fluidUniforms.uColor4.value.set('#e7e5e4');  // slightly warm light gray
-                // We use uColor5 for the cursor hover glow (soft orange), and we'll mix a faint dark tone in the shader
-                this.fluidUniforms.uColor5.value.set('#fed7aa');  // soft orange highlight
+                // Light mode: Extremely clean, premium, and bright palette without artificial muddying
+                this.fluidUniforms.uColor1.value.set('#ffffff');  // pure white base
+                this.fluidUniforms.uColor2.value.set('#fdfbf7');  // warm off-white
+                this.fluidUniforms.uColor3.value.set('#fff7ed');  // extremely subtle peach
+                this.fluidUniforms.uColor4.value.set('#f8fafc');  // extremely subtle slate/cool white
+                // We use uColor5 for the cursor hover glow and ripples
+                this.fluidUniforms.uColor5.value.set('#FF6B2B');  // deeper orange accent for high contrast in light mode
                 this.fluidUniforms.uBrightness.value = 1.0;
+                this.fluidUniforms.uThemeMode.value = 1.0; // 1.0 = light mode
             }
         };
         setTimeout(updateColors, 100);
@@ -64,18 +75,21 @@ class WebGLBackground {
 
     createFluidBackground() {
         const geometry = new THREE.PlaneGeometry(150, 150, 2, 2);
-        
+
         this.fluidUniforms = {
             uTime: { value: 0 },
             uMouse: { value: new THREE.Vector2(0.5, 0.5) },
             uMouseVelocity: { value: new THREE.Vector2(0.0, 0.0) },
+            uRipples: { value: this.ripples },
             uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
             uColor1: { value: new THREE.Color('#ffffff') },
             uColor2: { value: new THREE.Color('#f3f4f6') },
             uColor3: { value: new THREE.Color('#ffedd5') },
             uColor4: { value: new THREE.Color('#e7e5e4') },
             uColor5: { value: new THREE.Color('#fed7aa') },
-            uBrightness: { value: 1.0 }
+            uBrightness: { value: 1.0 },
+            uThemeMode: { value: 0.0 },
+            uActive: { value: 0.0 }
         };
 
         const material = new THREE.ShaderMaterial({
@@ -93,6 +107,7 @@ class WebGLBackground {
                 uniform float uTime;
                 uniform vec2 uMouse;
                 uniform vec2 uMouseVelocity;
+                uniform vec4 uRipples[10];
                 uniform vec2 uResolution;
                 uniform vec3 uColor1;
                 uniform vec3 uColor2;
@@ -100,6 +115,8 @@ class WebGLBackground {
                 uniform vec3 uColor4;
                 uniform vec3 uColor5;
                 uniform float uBrightness;
+                uniform float uThemeMode; // 0.0 = dark, 1.0 = light
+                uniform float uActive; // 1.0 when active, fades to 0.0 when idle
                 varying vec2 vUv;
 
                 // ---- Simplex-inspired smooth noise (no grid artifacts) ----
@@ -159,19 +176,20 @@ class WebGLBackground {
                     // Mouse gently pushes the warp field
                     q += mouseInfluence * 0.15;
 
-                    // Second warp layer — medium movement
+                    // Second warp layer — much smoother, larger fluid folds (multiplier reduced from 4.0 to 2.0)
                     vec2 r = vec2(
-                        fbm(st + 4.0 * q + vec2(1.7, 9.2) + time * 0.012),
-                        fbm(st + 4.0 * q + vec2(8.3, 2.8) + time * 0.015)
+                        fbm(st + 2.0 * q + vec2(1.7, 9.2) + time * 0.012),
+                        fbm(st + 2.0 * q + vec2(8.3, 2.8) + time * 0.015)
                     );
 
-                    // Third warp layer — adds extra organic complexity
+                    // Third warp layer — adds extra organic complexity (multiplier reduced from 3.0 to 1.5)
                     vec2 s = vec2(
-                        fbm(st + 3.0 * r + vec2(3.1, 7.4) + time * 0.005),
-                        fbm(st + 3.0 * r + vec2(6.8, 4.1) + time * 0.008)
+                        fbm(st + 1.5 * r + vec2(3.1, 7.4) + time * 0.005),
+                        fbm(st + 1.5 * r + vec2(6.8, 4.1) + time * 0.008)
                     );
 
-                    return fbm(st + 3.5 * s);
+                    // Final fluid swirl (multiplier reduced from 3.5 to 2.0)
+                    return fbm(st + 2.0 * s);
                 }
 
                 void main() {
@@ -182,21 +200,53 @@ class WebGLBackground {
                     vec2 st = vec2(uv.x * aspect, uv.y) * 0.7;
 
                     // ---- Cursor influence (natural fluid push) ----
-                    vec2 mouseUV = vec2(uMouse.x * aspect, uMouse.y);
-                    vec2 stToMouse = st - mouseUV * 1.5;
+                    vec2 mouseUV = vec2(uMouse.x * aspect, uMouse.y) * 0.7;
+                    vec2 stToMouse = st - mouseUV;
                     float mouseDist = length(stToMouse);
                     
-                    // Smooth radial falloff — cursor influence fades naturally
-                    float influence = smoothstep(1.5, 0.0, mouseDist);
+                    // Smooth radial falloff — smoother, slightly wider gradient so interaction doesn't clip
+                    // Multiply by uActive so it completely fades out when mouse is idle
+                    float influence = smoothstep(0.35, 0.0, mouseDist) * uActive;
                     
                     // Direction-aware push: noise warps AWAY from cursor
                     vec2 pushDir = normalize(stToMouse + 0.001);
-                    vec2 mouseWarp = pushDir * influence * 0.2; // Softer push
+                    vec2 mouseWarp = pushDir * influence * 1.0; // Slightly softer push
                     
                     // Add velocity-based streaking for natural motion feel
-                    vec2 velWarp = uMouseVelocity * influence * 1.0;
+                    vec2 velWarp = uMouseVelocity * influence * 2.5; // Slightly softer streaking
                     
                     vec2 totalMouseInfluence = mouseWarp + velWarp;
+
+                    // ---- Wave Ripples from cursor history ----
+                    vec2 rippleWarp = vec2(0.0);
+                    float rippleGlow = 0.0;
+                    float rippleShadow = 0.0;
+                    for (int i = 0; i < 10; i++) {
+                        float age = uTime - uRipples[i].z;
+                        if (age > 0.0 && age < 4.0) {
+                            vec2 rPos = vec2(uRipples[i].x * aspect, uRipples[i].y) * 0.7;
+                            vec2 d = st - rPos;
+                            float dist = length(d);
+                            
+                            // Wave expanding outwards
+                            float radius = age * 0.3; // speed of wave
+                            float width = 0.05 + age * 0.02; // wave gets thicker
+                            
+                            // Distance from the crest of the wave
+                            float distToCrest = abs(dist - radius);
+                            
+                            if (distToCrest < width) {
+                                float intensity = (1.0 - age / 4.0) * smoothstep(width, 0.0, distToCrest) * uRipples[i].w;
+                                float wave = sin((dist - radius) * 40.0) * intensity;
+                                rippleWarp += normalize(d + 0.0001) * wave * 0.45; // Increased wave warp
+                                rippleGlow += max(0.0, wave) * 1.5; // Only crest glows
+                                rippleShadow += max(0.0, -wave) * 1.2; // Trough casts shadow
+                            }
+                        }
+                    }
+                    
+                    // Add ripples to total warp (scaled up for stronger effect and masked by uActive)
+                    totalMouseInfluence += rippleWarp * 2.0 * uActive;
 
                     // ---- Warped noise field ----
                     float f = warpedNoise(st, uTime, totalMouseInfluence);
@@ -229,11 +279,17 @@ class WebGLBackground {
                     // Add the "very subtle black" (dark warm grey) as a rare deep shadow in the noise valleys
                     float shadowMap = smoothstep(0.1, 0.0, t);
                     vec3 subtleBlack = vec3(0.3, 0.3, 0.32); // very faint dark grey tint
-                    color = mix(color, subtleBlack, shadowMap * 0.15); // extremely subtle
+                    // Only apply deep noise shadows in dark mode
+                    color = mix(color, subtleBlack, shadowMap * 0.15 * (1.0 - uThemeMode)); 
 
-                    // ---- Hot accent glow near cursor ----
-                    float accentGlow = smoothstep(0.8, 0.0, mouseDist) * 0.12;
-                    color = mix(color, uColor5, accentGlow);
+                    // ---- Hot accent glow near cursor (tighter localized glow) ----
+                    // Masked by uActive so it fades out when mouse is idle
+                    float accentGlow = smoothstep(0.35, 0.0, mouseDist) * 0.12 * uActive;
+                    color = mix(color, uColor5, clamp(accentGlow + (rippleGlow * uActive), 0.0, 1.0));
+                    
+                    // Ripple shadow: In light mode (1.0), subtract cool tint. In dark mode (0.0), subtract neutral dark.
+                    vec3 shadowColor = mix(vec3(0.15), vec3(0.12, 0.10, 0.08), uThemeMode);
+                    color -= shadowColor * rippleShadow * uActive;
 
                     // ---- Extremely subtle warm yellow/cream overall tint based on flow ----
                     vec3 warmCream = vec3(1.0, 0.98, 0.94);
@@ -241,11 +297,14 @@ class WebGLBackground {
 
                     // ---- Subtle brightness variation from the noise field ----
                     float brightness = 0.85 + 0.15 * (f * 0.5 + 0.5);
+                    // In light mode, do not drop brightness below 0.96 so it stays bright and clean
+                    brightness = mix(brightness, 0.96 + 0.04 * (f * 0.5 + 0.5), uThemeMode);
                     color *= brightness * uBrightness;
 
                     // ---- Vignette for depth ----
                     float vignette = 1.0 - smoothstep(0.3, 1.5, length(uv - 0.5) * 1.5);
-                    color *= mix(0.7, 1.0, vignette);
+                    // Only apply vignette darkening in dark mode, light mode stays bright at edges
+                    color *= mix(1.0, mix(0.7, 1.0, vignette), (1.0 - uThemeMode));
 
                     gl_FragColor = vec4(color, 1.0);
                 }
@@ -260,16 +319,34 @@ class WebGLBackground {
     }
 
     addMouseInteraction() {
+        const handleMove = (x, y) => {
+            const nx = x / window.innerWidth;
+            const ny = 1.0 - (y / window.innerHeight);
+            this.targetMouse.x = nx;
+            this.targetMouse.y = ny;
+            this.lastMoveTime = performance.now();
+
+            // Spawn wave ripple if cursor moved enough
+            const dx = nx - this.lastRipplePos.x;
+            const dy = ny - this.lastRipplePos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > 0.02) {
+                const intensity = Math.min(dist * 10.0, 1.0);
+                this.ripples[this.rippleIndex].set(nx, ny, this.shaderTime, intensity);
+                this.rippleIndex = (this.rippleIndex + 1) % this.maxRipples;
+                this.lastRipplePos.set(nx, ny);
+            }
+        };
+
         window.addEventListener('mousemove', (e) => {
-            this.targetMouse.x = e.clientX / window.innerWidth;
-            this.targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+            handleMove(e.clientX, e.clientY);
         });
 
         // Touch support
         window.addEventListener('touchmove', (e) => {
             if (e.touches.length > 0) {
-                this.targetMouse.x = e.touches[0].clientX / window.innerWidth;
-                this.targetMouse.y = 1.0 - (e.touches[0].clientY / window.innerHeight);
+                handleMove(e.touches[0].clientX, e.touches[0].clientY);
             }
         }, { passive: true });
     }
@@ -285,25 +362,35 @@ class WebGLBackground {
 
     animate() {
         requestAnimationFrame(this.animate.bind(this));
-        
+
         const delta = this.clock.getDelta();
-        
+
         // Respect prefers-reduced-motion: slow down animation significantly if enabled
-        const timeDelta = this.reducedMotion ? delta * 0.05 : delta;
-        this.shaderTime += timeDelta;
+        const timeDelta = this.reducedMotion ? delta * 0.02 : delta;
+        this.shaderTime += timeDelta * 0.1; // Extremely slow global flow, background stays mostly still
 
-        // Smooth mouse lerp (very smooth, laggy feel = natural/liquid)
-        this.mouse.lerp(this.targetMouse, 0.02);
+        // Smooth mouse lerp (viscous, localized tracking)
+        this.mouse.lerp(this.targetMouse, 0.05);
 
-        // Calculate mouse velocity (smoothed)
-        this.mouseVelocity.x += (this.mouse.x - this.prevMouse.x - this.mouseVelocity.x) * 0.1;
-        this.mouseVelocity.y += (this.mouse.y - this.prevMouse.y - this.mouseVelocity.y) * 0.1;
+        // Calculate mouse velocity (smoothed with gentle tracking)
+        this.mouseVelocity.x += (this.mouse.x - this.prevMouse.x - this.mouseVelocity.x) * 0.12;
+        this.mouseVelocity.y += (this.mouse.y - this.prevMouse.y - this.mouseVelocity.y) * 0.12;
         // Dampen velocity over time
-        this.mouseVelocity.multiplyScalar(0.95);
-        
+        this.mouseVelocity.multiplyScalar(0.96); // Gentler decay for smoother trailing effect
+
         this.prevMouse.copy(this.mouse);
 
-        if(this.fluidUniforms) {
+        if (this.fluidUniforms) {
+            // Handle idle fade out
+            const timeSinceMove = (performance.now() - this.lastMoveTime) / 1000.0;
+            const targetActive = timeSinceMove > 1.5 ? 0.0 : 1.0;
+            
+            if (targetActive === 1.0) {
+                this.fluidUniforms.uActive.value = Math.min(this.fluidUniforms.uActive.value + delta * 5.0, 1.0); // fast fade in
+            } else {
+                this.fluidUniforms.uActive.value = Math.max(this.fluidUniforms.uActive.value - delta * 0.6, 0.0); // smooth fade out
+            }
+
             this.fluidUniforms.uTime.value = this.shaderTime;
             this.fluidUniforms.uMouse.value.copy(this.mouse);
             this.fluidUniforms.uMouseVelocity.value.copy(this.mouseVelocity);
