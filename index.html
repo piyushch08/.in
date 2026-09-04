@@ -543,7 +543,7 @@
         <div class="grid md:grid-cols-2 gap-6">
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
                 alt="Data Analytics Dashboard" loading="lazy">
@@ -570,7 +570,7 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80"
                 alt="Interactive Portfolio" loading="lazy">
@@ -597,7 +597,7 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"
                 alt="To do list (Planner)" loading="lazy">
@@ -624,7 +624,7 @@
           </article>
 
           <article
-            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d4 group rounded-3xl overflow-hidden bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
+            class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d4 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
             <div class="pf w-full h-56">
               <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80"
                 alt="Interactive Canvas" loading="lazy">
@@ -1219,13 +1219,28 @@
         images.push(img);
       }
 
-      window.drawScrollFrame = function (index) {
+      let currentFrame = -1;
+      let lastWidth = -1;
+      let lastHeight = -1;
+
+      window.drawScrollFrame = function (index, forceResize = false) {
         if (!images[index] || !images[index].complete) return;
+        if (currentFrame === index && !forceResize) return;
+        currentFrame = index;
 
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
+        const targetWidth = window.innerWidth * dpr;
+        const targetHeight = window.innerHeight * dpr;
 
+        if (lastWidth !== targetWidth || lastHeight !== targetHeight || forceResize) {
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+          lastWidth = targetWidth;
+          lastHeight = targetHeight;
+        }
+
+        // We must re-scale the context every time we resize the canvas since setting width/height resets the transform
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
         ctx.scale(dpr, dpr);
 
         const img = images[index];
@@ -1250,6 +1265,7 @@
           offsetX = 0; // Anchor to the left side
         }
 
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(img, 0, 0, cropWidth, cropHeight, offsetX, offsetY, drawWidth, drawHeight);
       };
 
@@ -1259,7 +1275,7 @@
         let scrollFraction = maxScroll > 0 ? scrollTop / maxScroll : 0;
         if (scrollFraction > 1) scrollFraction = 1;
         if (scrollFraction < 0) scrollFraction = 0;
-        window.drawScrollFrame(Math.min(89, Math.floor(scrollFraction * 90)));
+        window.drawScrollFrame(Math.min(89, Math.floor(scrollFraction * 90)), true);
       });
     })();
 
