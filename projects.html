@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="projects()" :class="{'dark':dark}" x-init="init()" class="scroll-smooth">
+<html lang="en" x-data="projects()" :class="{'dark':dark}" x-init="init()">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -297,9 +297,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize Lenis smooth scroll
       const lenis = new Lenis({
-        lerp: 0.15,
+        lerp: 0.1,
         smoothWheel: true,
-        wheelMultiplier: 1.2,
+        wheelMultiplier: 1.0,
         syncTouch: true
       });
 
