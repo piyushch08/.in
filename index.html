@@ -290,11 +290,11 @@
   </div>
   <!-- Scroll Sequence Background -->
   <canvas id="scroll-seq-bg"
-    class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"></canvas>
+    class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110" style="will-change: transform;"></canvas>
 
   <!-- Interactive 3D WebGL Background (Fluid Gradient) -->
   <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full -z-30 pointer-events-none"
-    style="view-transition-name: wave-container;"></canvas>
+    style="view-transition-name: wave-container; will-change: transform;"></canvas>
   <script type="module" src="./webgl-bg.js"></script>
 
 
