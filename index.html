@@ -219,6 +219,7 @@
     /* card hover */
     .card-h {
       transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1), border-color .3s, box-shadow .4s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
     }
 
     .card-h:hover {
@@ -1160,9 +1161,10 @@
 
                 // Initialize Lenis smooth scroll after the overlay is removed
                 const lenis = new Lenis({
-                  lerp: 0.06,
+                  lerp: 0.05,
                   smoothWheel: true,
-                  wheelMultiplier: 1.0
+                  wheelMultiplier: 1.0,
+                  syncTouch: true
                 });
 
                 lenis.on('scroll', (e) => {

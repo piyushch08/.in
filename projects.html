@@ -16,8 +16,8 @@
     *,*::before,*::after{box-sizing:border-box;}
     html{font-family:'DM Sans',sans-serif;}
     h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    .reveal{opacity:0;transform:translateY(30px) scale(0.98);transition:opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);}
-    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal{opacity:0;transform:translateY(30px) scale(0.98);transition:opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform;}
+    .reveal.visible{opacity:1;transform:translateY(0) scale(1);}
     .nav-link{position:relative;}
     .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
     .nav-link:hover::after{width:100%;}
@@ -30,7 +30,7 @@
     [x-cloak]{display:none!important;}
     .photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}
     .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-    .project-card{transition:transform .3s cubic-bezier(.4,0,.2,1),border-color .2s;}
+    .project-card{transition:transform .3s cubic-bezier(.4,0,.2,1),border-color .2s; will-change: transform;}
     .project-card:hover{transform:translateY(-4px);}
   @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } } 
   @keyframes bg-wave-down { 0% { background-position: 0 -1200px; } 100% { background-position: 0 0; } } 
@@ -43,10 +43,10 @@
 <body class="bg-transparent text-zinc-900 dark:text-zinc-100 font-body antialiased relative">
   <div class="fixed inset-0 bg-zinc-50 dark:bg-black -z-50 pointer-events-none"></div>
   <!-- WebGL Fluid Background -->
-  <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full pointer-events-none -z-20"></canvas>
+  <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full pointer-events-none -z-20" style="will-change: transform;"></canvas>
 
   <!-- Scroll Sequence Background -->
-  <canvas id="scroll-seq-bg" class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"></canvas>
+  <canvas id="scroll-seq-bg" class="fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110" style="will-change: transform;"></canvas>
   <!-- Premium ambient blurred background -->
   <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
   <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 dark:bg-blue-400/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
@@ -297,9 +297,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize Lenis smooth scroll
       const lenis = new Lenis({
-        lerp: 0.08,
+        lerp: 0.05,
         smoothWheel: true,
-        wheelMultiplier: 1.2
+        wheelMultiplier: 1.0,
+        syncTouch: true
       });
 
       lenis.on('scroll', (e) => {
