@@ -400,7 +400,7 @@
 
   <main>
     <!-- ═══ HERO ═══ -->
-    <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <section id="hero" class="relative min-h-[100dvh] flex items-center pt-16 overflow-hidden">
       <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/30 rounded-full blur-[100px] pointer-events-none z-0"
         aria-hidden="true"></div>
       <div
@@ -1164,9 +1164,9 @@
 
                 // Initialize Lenis smooth scroll after the overlay is removed
                 const lenis = new Lenis({
-                  lerp: 0.4,
+                  lerp: 0.08,
                   smoothWheel: true,
-                  wheelMultiplier: 1.5,
+                  wheelMultiplier: 1.2,
                   syncTouch: true
                 });
 
