@@ -21,7 +21,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <!-- Lenis for smooth scrolling -->
   <script defer src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com">
@@ -295,7 +295,8 @@
   </div>
   <!-- Scroll Sequence Background -->
   <canvas id="scroll-seq-bg"
-    class="hidden md:block fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110" style="will-change: transform;"></canvas>
+    class="hidden md:block fixed inset-0 w-full h-full pointer-events-none -z-10 opacity-80 dark:opacity-60 blur-lg scale-110"
+    style="will-change: transform;"></canvas>
 
   <!-- Interactive 3D WebGL Background (Fluid Gradient) -->
   <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full -z-30 pointer-events-none"
@@ -550,10 +551,6 @@
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d1 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-56">
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                alt="Data Analytics Dashboard" loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
@@ -573,10 +570,6 @@
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d2 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-56">
-              <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80"
-                alt="Interactive Portfolio" loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
@@ -596,10 +589,6 @@
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] card-h reveal d3 group rounded-3xl overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-56">
-              <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"
-                alt="To do list (Planner)" loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 <span
@@ -788,78 +777,54 @@
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d1 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-44">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80"
-                alt="Why I ditched CSS frameworks" loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
                   class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Design</span>
                 <span class="text-xs text-black">Mar 8, 2025</span>
               </div>
-              <a href="blog-article.html">
+              <a href="javascript:void(0)" class="cursor-default">
                 <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   Why I ditched heavy CSS frameworks for Tailwind</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">After years of fighting
                 specificity wars, here's what finally convinced me to make the switch.</p>
-              <a href="blog-article.html"
-                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
-                more
-                →</a>
             </div>
           </article>
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d2 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-44">
-              <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=700&q=80" alt="Design systems"
-                loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
                   class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Dev</span>
                 <span class="text-xs text-black">Feb 21, 2025</span>
               </div>
-              <a href="blog-article.html">
+              <a href="javascript:void(0)" class="cursor-default">
                 <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   Building a design system from scratch in a weekend</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">Tokens, components,
                 docs — the
                 process I follow to spin up a coherent system in 48 hours.</p>
-              <a href="blog-article.html"
-                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
-                more
-                →</a>
             </div>
           </article>
 
           <article
             class="hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/20 transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] reveal d3 card-h group bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/40 dark:border-zinc-800/50 hover:border-accent shadow-xl shadow-zinc-200/20 dark:shadow-none">
-            <div class="pf w-full h-44">
-              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80" alt="Freelance lessons"
-                loading="lazy">
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-3 mb-3">
                 <span
                   class="text-xs bg-orange-50 dark:bg-zinc-900 text-accent border border-orange-200 dark:border-zinc-800 px-2.5 py-1 rounded-full">Freelance</span>
                 <span class="text-xs text-black">Jan 14, 2025</span>
               </div>
-              <a href="blog-article.html">
+              <a href="javascript:void(0)" class="cursor-default">
                 <h3 class="font-display font-bold text-lg mb-2 group-hover:text-accent transition-all duration-400">
                   5 lessons from my first year of full-time freelancing</h3>
               </a>
               <p class="text-sm text-black dark:text-white dark:text-white leading-relaxed mb-4">Contracts, pricing,
                 scope creep —
                 the things nobody tells you before you go solo.</p>
-              <a href="blog-article.html"
-                class="hover:scale-105 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-1.5 text-sm font-medium text-black dark:text-white nl">Read
-                more
-                →</a>
             </div>
           </article>
 
