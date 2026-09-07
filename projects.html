@@ -148,7 +148,8 @@
                   </a>
                   <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4" x-text="p.desc"></p>
                   <div class="flex items-center justify-between">
-                    <a :href="p.url" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link">View project →</a>
+                    <a x-show="p.url !== 'javascript:void(0)'" :href="p.url" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link">View project →</a>
+                    <span x-show="p.url === 'javascript:void(0)'"></span>
                     <span class="text-xs text-zinc-400" x-text="p.year"></span>
                   </div>
                 </div>
@@ -261,9 +262,9 @@
         ],
 
         allProjects: [
-          { id:1,  title:'Data Analytics Dashboard',  category:'data',      categoryLabel:'Data',         tags:['Data','Dashboard'],           year:'2025', desc:'A comprehensive data analytics dashboard offering deep insights, data visualization, and real-time metrics tracking.',    img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',  url:'case-study.html' },
-          { id:2,  title:'Interactive Portfolio',     category:'web',       categoryLabel:'Web',          tags:['Web','Portfolio'],            year:'2024', desc:'A dynamic, responsive, and minimalist interactive portfolio to elegantly showcase digital projects and skills.',                              img:'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80', url:'case-study.html' },
-          { id:3,  title:'To do list (Planner)',      category:'app',       categoryLabel:'App',          tags:['App','Productivity'],         year:'2024', desc:'A functional and beautifully designed daily planner and to-do list application for enhanced productivity.',                      img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80', url:'case-study.html' },
+          { id:1,  title:'Data Analytics Dashboard',  category:'data',      categoryLabel:'Data',         tags:['Data','Dashboard'],           year:'2025', desc:'A comprehensive data analytics dashboard offering deep insights, data visualization, and real-time metrics tracking.',    img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',  url:'javascript:void(0)' },
+          { id:2,  title:'Interactive Portfolio',     category:'web',       categoryLabel:'Web',          tags:['Web','Portfolio'],            year:'2024', desc:'A dynamic, responsive, and minimalist interactive portfolio to elegantly showcase digital projects and skills.',                              img:'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80', url:'javascript:void(0)' },
+          { id:3,  title:'To do list (Planner)',      category:'app',       categoryLabel:'App',          tags:['App','Productivity'],         year:'2024', desc:'A functional and beautifully designed daily planner and to-do list application for enhanced productivity.',                      img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80', url:'javascript:void(0)' },
           { id:4,  title:'Interactive Canvas',        category:'canvas',    categoryLabel:'Canvas',       tags:['Canvas','Creative'],          year:'2024', desc:'An interactive digital canvas application allowing users to draw, edit, and collaborate in real-time.',                                      img:'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',  url:'https://draw-together-42nz.onrender.com' },
         ],
 
