@@ -510,8 +510,15 @@
           this.dark = localStorage.getItem('theme') !== 'light';
           this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
 
+          let ticking = false;
           window.addEventListener('scroll', () => {
-            this.scrolled = window.scrollY > 20;
+            if (!ticking) {
+              window.requestAnimationFrame(() => {
+                this.scrolled = window.scrollY > 20;
+                ticking = false;
+              });
+              ticking = true;
+            }
           }, { passive: true });
 
           this.$nextTick(() => {
@@ -535,16 +542,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize Lenis smooth scroll
       const lenis = new Lenis({
-        lerp: 0.08,
+        lerp: 0.05,
         smoothWheel: true,
-        wheelMultiplier: 1.2,
+        wheelMultiplier: 1,
         syncTouch: true
       });
 
+      let ticking = false;
       lenis.on('scroll', (e) => {
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        let scrollFraction = maxScroll > 0 ? e.scroll / maxScroll : 0;
-        if (scrollFraction < 0) scrollFraction = 0;
         if (scrollFraction > 1) scrollFraction = 1;
 
         const frameIndex = Math.min(89, Math.floor(scrollFraction * 90));

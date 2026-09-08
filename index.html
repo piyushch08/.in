@@ -1062,11 +1062,30 @@
           this.dark = localStorage.getItem('theme') !== 'light';
           this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
 
-          // scroll
+          // scroll header
+          let ticking = false;
           window.addEventListener('scroll', () => {
-            this.sc = window.scrollY > 20;
-            this.updateSection();
+            if (!ticking) {
+              window.requestAnimationFrame(() => {
+                this.sc = window.scrollY > 20;
+                ticking = false;
+              });
+              ticking = true;
+            }
           }, { passive: true });
+
+          // section tracking
+          const sectionIo = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                this.s = e.target.id;
+              }
+            });
+          }, { rootMargin: '-30% 0px -70% 0px' });
+          ['hero', 'services', 'work', 'about', 'blog', 'contact'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) sectionIo.observe(el);
+          });
 
           // reveal
           const io = new IntersectionObserver(entries => {
@@ -1076,16 +1095,6 @@
 
           // year
           document.getElementById('yr').textContent = new Date().getFullYear();
-        },
-
-        updateSection() {
-          const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
-          if (atBottom) { this.s = 'contact'; return; }
-          const ids = ['contact', 'blog', 'about', 'work', 'services', 'hero'];
-          for (const id of ids) {
-            const el = document.getElementById(id);
-            if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
-          }
         }
       }
     }
@@ -1129,9 +1138,9 @@
 
                 // Initialize Lenis smooth scroll after the overlay is removed
                 const lenis = new Lenis({
-                  lerp: 0.08,
+                  lerp: 0.05,
                   smoothWheel: true,
-                  wheelMultiplier: 1.2,
+                  wheelMultiplier: 1,
                   syncTouch: true
                 });
 
