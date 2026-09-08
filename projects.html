@@ -605,7 +605,8 @@
         if (currentFrame === index && !forceResize) return;
         currentFrame = index;
 
-        const dpr = window.devicePixelRatio || 1;
+        // Massive GPU optimization: Cap DPR to 1. Since canvas is blurred, we don't need high res
+        const dpr = Math.min(window.devicePixelRatio || 1, 1);
         const targetWidth = window.innerWidth * dpr;
         const targetHeight = window.innerHeight * dpr;
 

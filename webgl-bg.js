@@ -16,12 +16,16 @@ class WebGLBackground {
     init() {
         this.renderer = new THREE.WebGLRenderer({ 
             canvas: this.canvas, 
-            antialias: true, 
+            antialias: false, // Disabled for GPU performance, not needed for blurry shader
             alpha: true,
             powerPreference: "high-performance" 
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        // Render at a lower resolution and let CSS scale it up (Massive GPU savings)
+        const dpr = Math.min(window.devicePixelRatio, 1); // Cap pixel ratio to 1
+        const scaleDown = window.innerWidth < 768 ? 0.6 : 0.8; // Render at 60% res on mobile, 80% on desktop
+        this.renderer.setSize(window.innerWidth * scaleDown, window.innerHeight * scaleDown, false);
+        this.renderer.setPixelRatio(dpr);
 
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -361,7 +365,8 @@ class WebGLBackground {
     onWindowResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        const scaleDown = window.innerWidth < 768 ? 0.6 : 0.8;
+        this.renderer.setSize(window.innerWidth * scaleDown, window.innerHeight * scaleDown, false);
         if (this.fluidUniforms) {
             this.fluidUniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
         }

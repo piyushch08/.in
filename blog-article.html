@@ -406,7 +406,8 @@
       window.drawScrollFrame = function(index) {
         if (!images[index] || !images[index].complete) return;
         
-        const dpr = window.devicePixelRatio || 1;
+        // Massive GPU optimization: Cap DPR to 1. Since canvas is blurred, we don't need high res
+        const dpr = Math.min(window.devicePixelRatio || 1, 1);
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         
