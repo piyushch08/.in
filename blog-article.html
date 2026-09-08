@@ -349,9 +349,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize Lenis smooth scroll
       const lenis = new Lenis({
-        lerp: 0.08,
+        lerp: 0.05,
         smoothWheel: true,
-        wheelMultiplier: 1.2
+        wheelMultiplier: 1,
+        syncTouch: true
       });
 
       lenis.on('scroll', (e) => {

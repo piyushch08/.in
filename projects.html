@@ -548,8 +548,10 @@
         syncTouch: true
       });
 
-      let ticking = false;
       lenis.on('scroll', (e) => {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        let scrollFraction = maxScroll > 0 ? e.scroll / maxScroll : 0;
+        if (scrollFraction < 0) scrollFraction = 0;
         if (scrollFraction > 1) scrollFraction = 1;
 
         const frameIndex = Math.min(89, Math.floor(scrollFraction * 90));
