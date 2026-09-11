@@ -1125,7 +1125,7 @@
               setTimeout(() => {
                 name.classList.remove('opacity-0', '-translate-x-full');
                 name.classList.add('opacity-100', 'translate-x-0');
-              }, 400);
+              }, 200);
             }
 
             setTimeout(() => {
@@ -1138,9 +1138,9 @@
 
                 // Initialize Lenis smooth scroll after the overlay is removed
                 const lenis = new Lenis({
-                  lerp: 0.05,
+                  lerp: 0.08,
                   smoothWheel: true,
-                  wheelMultiplier: 1,
+                  wheelMultiplier: 1.2,
                   syncTouch: true
                 });
 
@@ -1168,8 +1168,8 @@
                   });
                 });
 
-              }, 1000);
-            }, 2200);
+              }, 800);
+            }, 1200);
           });
         });
       }
